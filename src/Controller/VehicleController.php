@@ -25,12 +25,12 @@ class VehicleController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $vehicles = $doctrine->getRepository(Vehicle::class)->findAll();
-
+        
         return $this->render('vehicle/index.html.twig', [
             'vehicles' => $vehicles,
         ]);
     }
-
+    
     /**
      * @Route("/vehicules/ajouter", name="vehicle_create")
      * 
@@ -41,6 +41,7 @@ class VehicleController extends AbstractController
      */
     public function create(Request $request, ManagerRegistry $doctrine): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $vehicle = new Vehicle();
 
         $form = $this->createForm(VehicleType::class, $vehicle);

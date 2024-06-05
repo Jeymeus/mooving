@@ -17,6 +17,9 @@ return [
     '_profiler_router' => [['token'], ['_controller' => 'web_profiler.controller.router::panelAction'], [], [['text', '/router'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     '_profiler_exception' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::body'], [], [['text', '/exception'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::stylesheet'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
+    'contact' => [[], ['_controller' => 'App\\Controller\\ContactController::contact'], [], [['text', '/contact']], [], [], []],
+    'app_login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
+    'app_logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
     'home' => [[], ['_controller' => 'App\\Controller\\HomeController::index'], [], [['text', '/']], [], [], []],
     'vehicle_index' => [[], ['_controller' => 'App\\Controller\\VehicleController::index'], [], [['text', '/vehicules']], [], [], []],
     'vehicle_create' => [[], ['_controller' => 'App\\Controller\\VehicleController::create'], [], [['text', '/vehicules/ajouter']], [], [], []],
@@ -26,4 +29,7 @@ return [
     'availability_delete_confirm' => [['slug', 'id'], ['_controller' => 'App\\Controller\\AvailabilityController::deleteConfirm'], ['slug' => '[a-z0-9\\-]+', 'id' => '\\d+'], [['text', '/confirmer'], ['variable', '/', '\\d+', 'id', true], ['variable', '/', '[a-z0-9\\-]+', 'slug', true], ['text', '/disponibilites']], [], [], []],
     'availability_delete' => [['slug', 'id'], ['_controller' => 'App\\Controller\\AvailabilityController::delete'], ['slug' => '[a-z0-9\\-]+', 'id' => '\\d+'], [['text', '/supprimer'], ['variable', '/', '\\d+', 'id', true], ['variable', '/', '[a-z0-9\\-]+', 'slug', true], ['text', '/disponibilites']], [], [], []],
     'search_availability' => [[], ['_controller' => 'App\\Controller\\SearchController::searchAvailability'], [], [['text', '/recherche']], [], [], []],
+    'App\Controller\ContactController::contact' => [[], ['_controller' => 'App\\Controller\\ContactController::contact'], [], [['text', '/contact']], [], [], []],
+    'App\Controller\SecurityController::login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
+    'App\Controller\SecurityController::logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
 ];
