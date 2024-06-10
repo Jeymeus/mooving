@@ -139,11 +139,21 @@ class __TwigTemplate_3e1695581d03ca55342240367557c458 extends Template
         }
         // line 27
         yield "    </div>
+    <div class=\"form-group\">
+        ";
+        // line 29
+        yield $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, (isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 29, $this->source); })()), "images", [], "any", false, false, false, 29), 'label', ["label" => "Images :"]);
+        yield "
+        ";
+        // line 30
+        yield $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, (isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 30, $this->source); })()), "images", [], "any", false, false, false, 30), 'widget', ["attr" => ["class" => "form-control-file mt-4", "multiple" => "multiple"]]);
+        yield "
+    </div>
 
     <button type=\"submit\" class=\"btn btn-warning mt-3\">Ajouter</button>
     ";
-        // line 30
-        yield         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 30, $this->source); })()), 'form_end');
+        // line 34
+        yield         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 34, $this->source); })()), 'form_end');
         yield "
 ";
         
@@ -176,7 +186,7 @@ class __TwigTemplate_3e1695581d03ca55342240367557c458 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  146 => 30,  141 => 27,  135 => 24,  132 => 23,  130 => 22,  126 => 21,  122 => 20,  118 => 18,  112 => 15,  109 => 14,  107 => 13,  103 => 12,  99 => 11,  94 => 9,  90 => 7,  80 => 6,  60 => 4,  37 => 2,);
+        return array (  156 => 34,  149 => 30,  145 => 29,  141 => 27,  135 => 24,  132 => 23,  130 => 22,  126 => 21,  122 => 20,  118 => 18,  112 => 15,  109 => 14,  107 => 13,  103 => 12,  99 => 11,  94 => 9,  90 => 7,  80 => 6,  60 => 4,  37 => 2,);
     }
 
     public function getSourceContext()
@@ -207,6 +217,10 @@ class __TwigTemplate_3e1695581d03ca55342240367557c458 extends Template
                 {{ form_errors(form.model) }}
             </div>
         {% endif %}
+    </div>
+    <div class=\"form-group\">
+        {{ form_label(form.images, 'Images :') }}
+        {{ form_widget(form.images, {'attr': {'class': 'form-control-file mt-4', 'multiple': 'multiple'}}) }}
     </div>
 
     <button type=\"submit\" class=\"btn btn-warning mt-3\">Ajouter</button>

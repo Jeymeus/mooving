@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Vehicle;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Event\PostSubmitEvent;
@@ -17,6 +18,11 @@ class VehicleType extends AbstractType
         $builder
             ->add('brand', TextType::class)
             ->add('model', TextType::class)
+            ->add('images', FileType::class, [
+                'label' => 'Images',
+                'mapped' => false, 
+                'multiple' => true,
+            ])
             ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...));
     }
 

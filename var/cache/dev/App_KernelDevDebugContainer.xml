@@ -399,6 +399,9 @@
     <service id="App\Form\ContactType" class="App\Form\ContactType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Form\ImageType" class="App\Form\ImageType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
     <service id="App\Form\SearchAvailabilityType" class="App\Form\SearchAvailabilityType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
@@ -406,6 +409,10 @@
       <tag name="form.type"/>
     </service>
     <service id="App\Repository\AvailabilityRepository" class="App\Repository\AvailabilityRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\ImageRepository" class="App\Repository\ImageRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -447,7 +454,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.1glGei1"/>
+      <argument type="service" id=".service_locator.qSRc9DP"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1364,6 +1371,7 @@
       <argument type="collection">
         <argument>App\Form\AvailabilityType</argument>
         <argument>App\Form\ContactType</argument>
+        <argument>App\Form\ImageType</argument>
         <argument>App\Form\SearchAvailabilityType</argument>
         <argument>App\Form\VehicleType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
@@ -3326,7 +3334,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.1glGei1"/>
+      <argument type="service" id=".service_locator.qSRc9DP"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -3810,7 +3818,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.K_UnjWD"/>
+      <argument type="service" id=".service_locator.M17vwBz"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -5082,7 +5090,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.Q8KbRV1"/>
+      <argument type="service" id=".service_locator.zgqOJ.u"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -7206,12 +7214,16 @@
     <service id=".abstract.instanceof.App\Form\AvailabilityType" class="App\Form\AvailabilityType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ContactType" class="App\Form\ContactType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\ContactType" class="App\Form\ContactType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ImageType" class="App\Form\ImageType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\ImageType" class="App\Form\ImageType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\SearchAvailabilityType" class="App\Form\SearchAvailabilityType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\SearchAvailabilityType" class="App\Form\SearchAvailabilityType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\VehicleType" class="App\Form\VehicleType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\VehicleType" class="App\Form\VehicleType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\AvailabilityRepository" class="App\Repository\AvailabilityRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\AvailabilityRepository" class="App\Repository\AvailabilityRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ImageRepository" class="App\Repository\ImageRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\ImageRepository" class="App\Repository\ImageRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\VehicleRepository" class="App\Repository\VehicleRepository" autowire="true" abstract="true"/>
@@ -7645,11 +7657,11 @@
         <argument key="doctrine" type="service_closure" id="doctrine"/>
       </argument>
     </service>
-    <service id=".service_locator.QBzdZln" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.ESajd_W" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="doctrine" type="service_closure" id="doctrine"/>
-        <argument key="vehicle" type="service_closure" id=".errored..service_locator.QBzdZln.App\Entity\Vehicle"/>
+        <argument key="slugger" type="service_closure" id="slugger"/>
       </argument>
     </service>
     <service id=".service_locator.CsMkqUa" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -7690,12 +7702,10 @@
         <argument key="authenticationUtils" type="service_closure" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".service_locator.1glGei1" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.qSRc9DP" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Controller\Admin\VehicleController::create" type="service_closure" id=".service_locator.o6sN0hZ"/>
-        <argument key="App\Controller\Admin\VehicleController::delete" type="service_closure" id=".service_locator.QBzdZln"/>
-        <argument key="App\Controller\Admin\VehicleController::edit" type="service_closure" id=".service_locator.QBzdZln"/>
+        <argument key="App\Controller\Admin\VehicleController::create" type="service_closure" id=".service_locator.ESajd_W"/>
         <argument key="App\Controller\Admin\VehicleController::index" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AvailabilityController::create" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AvailabilityController::delete" type="service_closure" id=".service_locator.CsMkqUa"/>
@@ -7710,9 +7720,7 @@
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
-        <argument key="App\Controller\Admin\VehicleController:create" type="service_closure" id=".service_locator.o6sN0hZ"/>
-        <argument key="App\Controller\Admin\VehicleController:delete" type="service_closure" id=".service_locator.QBzdZln"/>
-        <argument key="App\Controller\Admin\VehicleController:edit" type="service_closure" id=".service_locator.QBzdZln"/>
+        <argument key="App\Controller\Admin\VehicleController:create" type="service_closure" id=".service_locator.ESajd_W"/>
         <argument key="App\Controller\Admin\VehicleController:index" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AvailabilityController:create" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AvailabilityController:delete" type="service_closure" id=".service_locator.CsMkqUa"/>
@@ -7884,11 +7892,12 @@
       <argument type="service" id="argument_resolver.query_parameter_value_resolver"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.K_UnjWD" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.M17vwBz" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\AvailabilityType" type="service_closure" id="App\Form\AvailabilityType"/>
         <argument key="App\Form\ContactType" type="service_closure" id="App\Form\ContactType"/>
+        <argument key="App\Form\ImageType" type="service_closure" id="App\Form\ImageType"/>
         <argument key="App\Form\SearchAvailabilityType" type="service_closure" id="App\Form\SearchAvailabilityType"/>
         <argument key="App\Form\VehicleType" type="service_closure" id="App\Form\VehicleType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service_closure" id="form.type.entity"/>
@@ -8016,10 +8025,11 @@
         <argument key="turbo.doctrine.event_listener" type="service_closure" id="turbo.doctrine.event_listener"/>
       </argument>
     </service>
-    <service id=".service_locator.Q8KbRV1" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.zgqOJ.u" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\AvailabilityRepository" type="service_closure" id="App\Repository\AvailabilityRepository"/>
+        <argument key="App\Repository\ImageRepository" type="service_closure" id="App\Repository\ImageRepository"/>
         <argument key="App\Repository\UserRepository" type="service_closure" id="App\Repository\UserRepository"/>
         <argument key="App\Repository\VehicleRepository" type="service_closure" id="App\Repository\VehicleRepository"/>
       </argument>
@@ -8806,9 +8816,6 @@
     <service id="debug.security.event_dispatcher.main.inner" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
     <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.y4_Zrx.&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
-    </service>
-    <service id=".errored..service_locator.QBzdZln.App\Entity\Vehicle" class="App\Entity\Vehicle">
-      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.QBzdZln&quot;: it needs an instance of &quot;App\Entity\Vehicle&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
     </service>
     <service id=".errored..service_locator.G2fKdh..DateTime" class="DateTime">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.G2fKdh.&quot;: it references class &quot;DateTime&quot; but no such service exists."/>
@@ -9967,7 +9974,7 @@
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.bJ.4HC5" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.1glGei1"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.qSRc9DP"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
@@ -10011,7 +10018,7 @@
     <service id="security.event_dispatcher.main" alias="debug.security.event_dispatcher.main"/>
     <service id=".service_locator.gFlme_s" alias=".service_locator.y4_Zrx."/>
     <service id=".service_locator.eQ296SW" alias=".service_locator.o6sN0hZ"/>
-    <service id=".service_locator.WJn6sTJ" alias=".service_locator.QBzdZln"/>
+    <service id=".service_locator.jZ84U_V" alias=".service_locator.ESajd_W"/>
     <service id=".service_locator.9e2t_lq" alias=".service_locator.CsMkqUa"/>
     <service id=".service_locator._UPOl.X" alias=".service_locator.tQ._l3s"/>
     <service id=".service_locator.OJmnvRJ" alias=".service_locator.uVvF4gL"/>

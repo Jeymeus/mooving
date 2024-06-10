@@ -105,7 +105,7 @@ class __TwigTemplate_2bb2c42ff964a1574fbcef9aecf5cd75 extends Template
         <div class=\"my-3 text-center\">
         <a class=\"btn btn-warning text-center\" href=\"";
         // line 22
-        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("vehicle_index");
+        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("admin_vehicle_index");
         yield "\">C'est par ici</a>
         </div>
         
@@ -167,11 +167,11 @@ class __TwigTemplate_2bb2c42ff964a1574fbcef9aecf5cd75 extends Template
         </ul>
 
         <div class=\"my-3 text-center\">
-        <a class=\"btn btn-warning text-center\" href=\"{{ path('vehicle_index')}}\">C'est par ici</a>
+        <a class=\"btn btn-warning text-center\" href=\"{{ path('admin_vehicle_index')}}\">C'est par ici</a>
         </div>
         
     </section>
 {% endblock %}
-", "home/index.html.twig", "C:\\Users\\Ikki\\Desktop\\wikicampers\\project\\templates\\home\\index.html.twig");
+", "home/index.html.twig", "C:\\Users\\Ikki\\Desktop\\mooving\\templates\\home\\index.html.twig");
     }
 }
