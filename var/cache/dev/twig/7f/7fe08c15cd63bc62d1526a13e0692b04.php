@@ -86,13 +86,13 @@ class __TwigTemplate_484cbb2461c4813ba3f428c5413ed6ec extends Template
                                 <li class=\"nav-item\">
                                 <a class=\"nav-link active\" aria-current=\"page\" href=\"";
             // line 27
-            yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("vehicle_index");
+            yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("admin_vehicle_index");
             yield "\">Véhicules</a>
                                 </li>
                                 <li class=\"nav-item\">
                                 <a class=\"nav-link active\" aria-current=\"page\" href=\"";
             // line 30
-            yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("vehicle_create");
+            yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("admin_vehicle_create");
             yield "\">Ajout d'un véhicule</a>
                                 </li>
                                 <li class=\"nav-item\">
@@ -293,10 +293,10 @@ class __TwigTemplate_484cbb2461c4813ba3f428c5413ed6ec extends Template
                         <div class=\"collapse navbar-collapse\" id=\"navbarNav\">
                             <ul class=\"navbar-nav\">
                                 <li class=\"nav-item\">
-                                <a class=\"nav-link active\" aria-current=\"page\" href=\"{{ path('vehicle_index') }}\">Véhicules</a>
+                                <a class=\"nav-link active\" aria-current=\"page\" href=\"{{ path('admin_vehicle_index') }}\">Véhicules</a>
                                 </li>
                                 <li class=\"nav-item\">
-                                <a class=\"nav-link active\" aria-current=\"page\" href=\"{{ path('vehicle_create') }}\">Ajout d'un véhicule</a>
+                                <a class=\"nav-link active\" aria-current=\"page\" href=\"{{ path('admin_vehicle_create') }}\">Ajout d'un véhicule</a>
                                 </li>
                                 <li class=\"nav-item\">
                                 <a class=\"nav-link active\" aria-current=\"page\" href=\"{{ path('availability_create') }}\">Ajout d'une disponibilité</a>
@@ -317,6 +317,6 @@ class __TwigTemplate_484cbb2461c4813ba3f428c5413ed6ec extends Template
         <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz\" crossorigin=\"anonymous\"></script>
     </body>
 </html>
-", "base.html.twig", "C:\\Users\\Ikki\\Desktop\\wikicampers\\project\\templates\\base.html.twig");
+", "base.html.twig", "C:\\Users\\Ikki\\Desktop\\mooving\\templates\\base.html.twig");
     }
 }

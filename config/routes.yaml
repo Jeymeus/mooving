@@ -8,15 +8,6 @@ home:
     path: /
     controller: App\Controller\HomeController::index
 
-vehicle_index:
-    path: /vehicules
-    controller: App\Controller\VehicleController::index
-    methods: [GET]
-
-vehicle_create:
-    path: /vehicules/ajouter
-    controller: App\Controller\VehicleController::create
-    methods: [GET, POST]
 
 availability_create:
     path: /disponibilites/ajouter
