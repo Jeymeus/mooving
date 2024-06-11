@@ -456,6 +456,6 @@ class __TwigTemplate_4ef1c7dbade49624c6ec249f67ce663a extends Template
         </div>
     {% endfor %}
 {% endblock %}
-", "@Debug/Profiler/dump.html.twig", "C:\\Users\\Ikki\\Desktop\\wikicampers\\project\\vendor\\symfony\\debug-bundle\\Resources\\views\\Profiler\\dump.html.twig");
+", "@Debug/Profiler/dump.html.twig", "C:\\Users\\Ikki\\Desktop\\mooving\\vendor\\symfony\\debug-bundle\\Resources\\views\\Profiler\\dump.html.twig");
     }
 }

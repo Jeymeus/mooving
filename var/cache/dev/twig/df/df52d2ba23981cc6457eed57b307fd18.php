@@ -295,6 +295,6 @@ class __TwigTemplate_1f47735cbb0c55675cec31b519fff3eb extends Template
         });
     </script>
 {% endblock %}
-", "@WebProfiler/Profiler/open.html.twig", "C:\\Users\\Ikki\\Desktop\\wikicampers\\project\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\open.html.twig");
+", "@WebProfiler/Profiler/open.html.twig", "C:\\Users\\Ikki\\Desktop\\mooving\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\open.html.twig");
     }
 }

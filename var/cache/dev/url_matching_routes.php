@@ -43,11 +43,16 @@ return [
                         .')'
                     .')'
                 .')'
+                .'|/admin/vehicules/(?'
+                    .'|(\\d+)/modifier(*:236)'
+                    .'|image/(\\d+)/supprimer(*:265)'
+                    .'|(\\d+)/supprimer(*:288)'
+                .')'
                 .'|/disponibilites/(?'
-                    .'|([a-z0-9\\-]+)(*:234)'
-                    .'|([a-z0-9\\-]+)/(\\d+)/modifier(*:270)'
-                    .'|([a-z0-9\\-]+)/(\\d+)/confirmer(*:307)'
-                    .'|([a-z0-9\\-]+)/(\\d+)/supprimer(*:344)'
+                    .'|([a-z0-9\\-]+)(*:329)'
+                    .'|([a-z0-9\\-]+)/(\\d+)/modifier(*:365)'
+                    .'|([a-z0-9\\-]+)/(\\d+)/confirmer(*:402)'
+                    .'|([a-z0-9\\-]+)/(\\d+)/supprimer(*:439)'
                 .')'
             .')/?$}sDu',
     ],
@@ -60,10 +65,13 @@ return [
         168 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         181 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         191 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        234 => [[['_route' => 'availability_show', '_controller' => 'App\\Controller\\AvailabilityController::show'], ['slug'], ['GET' => 0], null, false, true, null]],
-        270 => [[['_route' => 'availability_edit', '_controller' => 'App\\Controller\\AvailabilityController::edit'], ['slug', 'id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        307 => [[['_route' => 'availability_delete_confirm', '_controller' => 'App\\Controller\\AvailabilityController::deleteConfirm'], ['slug', 'id'], ['GET' => 0], null, false, false, null]],
-        344 => [
+        236 => [[['_route' => 'admin_vehicle_edit', '_controller' => 'App\\Controller\\Admin\\VehicleController::edit'], ['id'], null, null, false, false, null]],
+        265 => [[['_route' => 'admin_vehicle_delete_image', '_controller' => 'App\\Controller\\Admin\\VehicleController::deleteImage'], ['id'], ['DELETE' => 0], null, false, false, null]],
+        288 => [[['_route' => 'admin_vehicle_delete', '_controller' => 'App\\Controller\\Admin\\VehicleController::delete'], ['id'], null, null, false, false, null]],
+        329 => [[['_route' => 'availability_show', '_controller' => 'App\\Controller\\AvailabilityController::show'], ['slug'], ['GET' => 0], null, false, true, null]],
+        365 => [[['_route' => 'availability_edit', '_controller' => 'App\\Controller\\AvailabilityController::edit'], ['slug', 'id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        402 => [[['_route' => 'availability_delete_confirm', '_controller' => 'App\\Controller\\AvailabilityController::deleteConfirm'], ['slug', 'id'], ['GET' => 0], null, false, false, null]],
+        439 => [
             [['_route' => 'availability_delete', '_controller' => 'App\\Controller\\AvailabilityController::delete'], ['slug', 'id'], ['DELETE' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],

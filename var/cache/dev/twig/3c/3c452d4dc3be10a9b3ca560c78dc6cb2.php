@@ -320,6 +320,6 @@ class __TwigTemplate_9429e1cfdd54e3ddc363d42703a75e2f extends Template
         </div>
     </div>
 {% endblock %}
-", "availability/edit.html.twig", "C:\\Users\\Ikki\\Desktop\\wikicampers\\project\\templates\\availability\\edit.html.twig");
+", "availability/edit.html.twig", "C:\\Users\\Ikki\\Desktop\\mooving\\templates\\availability\\edit.html.twig");
     }
 }

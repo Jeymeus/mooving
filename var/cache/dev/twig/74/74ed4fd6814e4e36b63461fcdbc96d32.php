@@ -186,6 +186,6 @@ class __TwigTemplate_115f4eb2323e3ea41aabe55ccf43b7d7 extends Template
     </form>
     <a href=\"{{ path('availability_show', {'slug': vehicle.slug}) }}\" class=\"btn btn-secondary mt-3\">Non, annuler</a>
 {% endblock %}
-", "availability/delete_confirm.html.twig", "C:\\Users\\Ikki\\Desktop\\wikicampers\\project\\templates\\availability\\delete_confirm.html.twig");
+", "availability/delete_confirm.html.twig", "C:\\Users\\Ikki\\Desktop\\mooving\\templates\\availability\\delete_confirm.html.twig");
     }
 }

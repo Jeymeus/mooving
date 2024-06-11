@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route("/admin/vehicules", name: "admin_vehicle_")]
 class VehicleController extends AbstractController
@@ -68,7 +70,9 @@ class VehicleController extends AbstractController
                     // Create new Image entity and set its properties
                     $image = new Image();
                     $image->setFileName($newFilename);
-                    $image->setVehicle($vehicle);
+                    // je remplace $vehicle->addImage($image); par $image->setVehicle($vehicle);
+                    // $image->setVehicle($vehicle);
+                    $vehicle->addImage($image);
 
                     // Persist the Image entity
                     $entityManager->persist($image);
@@ -87,60 +91,112 @@ class VehicleController extends AbstractController
         ]);
     }
 
-    // #[Route("/{id}/modifier", name: "edit", requirements: ['id' => '\d+'])]
-    // public function edit(Vehicle $vehicle, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, string $images_directory): Response
-    // {
-    //     $form = $this->createForm(VehicleType::class, $vehicle);
-    //     $form->handleRequest($request);
+    #[Route("/{id}/modifier", name: "edit", requirements: ['id' => '\d+'])]
+    public function edit(Vehicle $vehicle, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, string $images_directory = null): Response
+    {
+        $form = $this->createForm(VehicleType::class, $vehicle);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager = $doctrine->getManager();
+        $form->handleRequest($request);
 
-    //         // Handle image uploads
-    //         $images = $form->get('images')->getData();
-    //         foreach ($images as $imageFile) {
-    //             $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-    //             $safeFilename = $slugger->slug($originalFilename);
-    //             $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $doctrine->getManager();
 
-    //             // Move the file to the directory where images are stored
-    //             try {
-    //                 $imageFile->move(
-    //                     $images_directory,
-    //                     $newFilename
-    //                 );
-    //             } catch (FileException $e) {
-    //                 // Handle exception if something happens during file upload
-    //             }
+            // Handle image uploads
+            $images = $form->get('images')->getData();
+            $images_directory = $this->getParameter('kernel.project_dir').'/public/uploads/';
+            foreach ($images as $imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
 
-    //             // Create new Image entity and set its properties
-    //             $image = new Image();
-    //             $image->setFileName($newFilename);
-    //             $image->setVehicle($vehicle);
+                // Move the file to the directory where images are stored
+                try {
+                    $imageFile->move(
+                        $images_directory,
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Handle exception if something happens during file upload
+                }
 
-    //             // Persist the Image entity
-    //             $entityManager->persist($image);
-    //         }
+                // Create new Image entity and set its properties
+                $image = new Image();
+                $image->setFileName($newFilename);
+                // $image->setVehicle($vehicle);
+                $vehicle->addImage($image);
 
-    //         $entityManager->flush();
+                // Persist the Image entity
+                $entityManager->persist($image);
+            }
 
-    //         $this->addFlash('success', 'Le véhicule a bien été modifié.');
-    //         return $this->redirectToRoute('admin_vehicle_index');
-    //     }
+            // Handle image deletions
+            // $existingImages = $vehicle->getImages();
+            // $formImages = $form->get('images')->getData();
+            // foreach ($existingImages as $image) {
+            //     if (!in_array($image, $formImages)) {
+            //         $imagePath = $images_directory . $image->getFileName();
+            //         if (file_exists($imagePath)) {
+            //             unlink($imagePath);
+            //         }
+            //         $entityManager->remove($image);
+            //     }
+            // }
 
-    //     return $this->render('admin/vehicle/edit.html.twig', [
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
+            $entityManager->flush();
 
-    // #[Route("/{id}/supprimer", name: "delete", requirements: ['id' => '\d+'])]
-    // public function delete(Vehicle $vehicle, ManagerRegistry $doctrine): Response
-    // {
-    //     $entityManager = $doctrine->getManager();
-    //     $entityManager->remove($vehicle);
-    //     $entityManager->flush();
-    //     $this->addFlash('success', 'Le véhicule a bien été supprimé.');
+            $this->addFlash('success', 'Le véhicule a bien été modifié.');
+            return $this->redirectToRoute('admin_vehicle_index');
+        }
 
-    //     return $this->redirectToRoute('admin_vehicle_index');
-    // }
+        $images = $vehicle->getImages();
+
+        return $this->render('admin/vehicle/edit.html.twig', [
+            'form' => $form->createView(),
+            'images' => $images,
+            'vehicle' => $vehicle,
+        ]);
+    }
+
+    #[Route("/image/{id}/supprimer", name: "delete_image", requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteImage(Image $image, ManagerRegistry $doctrine, Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        
+        if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
+
+            $fileName = $image->getFileName();
+            unlink($this->getParameter('kernel.project_dir').'/public/uploads/'.$fileName);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($image);
+            $entityManager->flush();
+
+            return new JsonResponse(['success' => 1]);
+        } else {
+            return new JsonResponse(['error' => 'Token CSRF invalide.'], 400);
+        }
+    }
+
+    #[Route("/{id}/supprimer", name: "delete", requirements: ['id' => '\d+'])]
+    public function delete(Vehicle $vehicle, ManagerRegistry $doctrine): Response
+    {
+        $entityManager = $doctrine->getManager();
+
+        // Supprimer les fichiers images associés au véhicule
+        $images_directory = $this->getParameter('kernel.project_dir') . '/public/uploads/';
+        foreach ($vehicle->getImages() as $image) {
+            $image_path = $images_directory . $image->getFileName();
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
+            $entityManager->remove($image);
+        }
+
+        $entityManager->remove($vehicle);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le véhicule a bien été supprimé.');
+
+        return $this->redirectToRoute('admin_vehicle_index');
+    }
+
 }

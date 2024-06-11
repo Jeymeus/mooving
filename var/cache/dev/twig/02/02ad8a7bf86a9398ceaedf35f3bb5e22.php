@@ -82,12 +82,20 @@ class __TwigTemplate_e25dca053e9065d339fac584b352d193 extends Template
             yield " ";
             yield Twig\Extension\EscaperExtension::escape($this->env, CoreExtension::getAttribute($this->env, $this->source, $context["vehicle"], "model", [], "any", false, false, false, 8), "html", null, true);
             yield "</a>
+            <a href=\"";
+            // line 9
+            yield Twig\Extension\EscaperExtension::escape($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("admin_vehicle_edit", ["slug" => CoreExtension::getAttribute($this->env, $this->source, $context["vehicle"], "slug", [], "any", false, false, false, 9), "id" => CoreExtension::getAttribute($this->env, $this->source, $context["vehicle"], "id", [], "any", false, false, false, 9)]), "html", null, true);
+            yield "\" class=\"btn btn-warning mt-3\">Modifier</a>
+            <a href=\"";
+            // line 10
+            yield Twig\Extension\EscaperExtension::escape($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("admin_vehicle_delete", ["slug" => CoreExtension::getAttribute($this->env, $this->source, $context["vehicle"], "slug", [], "any", false, false, false, 10), "id" => CoreExtension::getAttribute($this->env, $this->source, $context["vehicle"], "id", [], "any", false, false, false, 10)]), "html", null, true);
+            yield "\" class=\"btn btn-danger mt-3\">Supprimer</a>
             ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['vehicle'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 10
+        // line 12
         yield "        </div>
     </div>
 ";
@@ -121,7 +129,7 @@ class __TwigTemplate_e25dca053e9065d339fac584b352d193 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  91 => 10,  78 => 8,  74 => 7,  69 => 4,  59 => 3,  36 => 1,);
+        return array (  99 => 12,  91 => 10,  87 => 9,  78 => 8,  74 => 7,  69 => 4,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -134,6 +142,8 @@ class __TwigTemplate_e25dca053e9065d339fac584b352d193 extends Template
         <div class=\"list-group\">
             {% for vehicle in vehicles %}
             <a class=\"list-group-item list-group-item-action list-group-item-warning\" href=\"{{ path('availability_show', {'slug': vehicle.slug}) }}\">{{ vehicle.brand }} {{ vehicle.model }}</a>
+            <a href=\"{{ path('admin_vehicle_edit', {'slug': vehicle.slug, 'id': vehicle.id}) }}\" class=\"btn btn-warning mt-3\">Modifier</a>
+            <a href=\"{{ path('admin_vehicle_delete', {'slug': vehicle.slug, 'id': vehicle.id}) }}\" class=\"btn btn-danger mt-3\">Supprimer</a>
             {% endfor %}
         </div>
     </div>

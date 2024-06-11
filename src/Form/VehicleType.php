@@ -22,6 +22,7 @@ class VehicleType extends AbstractType
                 'label' => 'Images',
                 'mapped' => false, 
                 'multiple' => true,
+                'required' => false,
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...));
     }

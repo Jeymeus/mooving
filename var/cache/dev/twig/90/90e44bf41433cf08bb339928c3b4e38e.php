@@ -97,6 +97,6 @@ class __TwigTemplate_f53237401090a4e00eef993d1e856167 extends Template
     <div class=\"alert alert-{{ type }} my-3\">
         {{ messages | join('. ') }}
     </div>
-{% endfor %}", "partials/flash.html.twig", "C:\\Users\\Ikki\\Desktop\\wikicampers\\project\\templates\\partials\\flash.html.twig");
+{% endfor %}", "partials/flash.html.twig", "C:\\Users\\Ikki\\Desktop\\mooving\\templates\\partials\\flash.html.twig");
     }
 }
