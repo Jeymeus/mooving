@@ -14,12 +14,14 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route("/admin/vehicules", name: "admin_vehicle_")]
+#[IsGranted("ROLE_ADMIN")]
 class VehicleController extends AbstractController
 {
     #[Route("/", name: "index")]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine, Request $request): Response
     {
         $vehicles = $doctrine->getRepository(Vehicle::class)->findAll();
 

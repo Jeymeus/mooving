@@ -32,7 +32,7 @@ class SearchController extends AbstractController
             $end_date = \DateTime::createFromFormat('Y-m-d', $request->request->get('end_date'));
             $maxPrice = $request->request->get('maxPrice');
             
-            $durations = $this->generateDateRanges($start_date, $end_date, $maxPrice);
+            $durations = $this->generateDateRanges($start_date, $end_date, $maxPrice);!
 
             $availabilities = [];
 

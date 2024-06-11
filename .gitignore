@@ -1,0 +1,11 @@
+# Symfony directories
+/app/config/parameters.yml
+/app/logs/*
+/app/cache/*
+/bin/
+/var/
+/vendor/
+/web/bundles/
+/web/uploads/
+/web/media/
+
