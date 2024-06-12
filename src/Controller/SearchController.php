@@ -10,14 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    /**
-     * #[Route('/rechercher', name: 'search_availability')]
-     * 
-     * @param Request $request The HTTP request object.
-     * @param AvailabilityRepository $availabilityRepository The availability repository.
-     * @return Response A HTTP response object.
-     *  
-    */
+
     public function searchAvailability(Request $request, AvailabilityRepository $availabilityRepository): Response
     {
         $availabilities = [];
@@ -51,13 +44,7 @@ class SearchController extends AbstractController
         ]);
     }
 
-    /**
-     * Calculate the price per day.
-     * 
-     * @param array $duration The duration of the availability.
-     * @return float The price per day.
-     * 
-     */
+   
     public function calculatePricePerDay(array $duration): float
     {
         $start_date = $duration['start_date'];
