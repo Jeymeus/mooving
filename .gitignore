@@ -5,6 +5,7 @@
 /bin/
 /var/
 /vendor/
+
 /web/bundles/
 /web/uploads/
 /web/media/

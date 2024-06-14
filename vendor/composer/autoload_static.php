@@ -132,6 +132,11 @@ class ComposerStaticInit2e074b178cf99c894ccdda33ec3f7bde
             'Monolog\\' => 8,
             'Masterminds\\' => 12,
         ),
+        'I' => 
+        array (
+            'Intervention\\Image\\' => 19,
+            'Intervention\\Gif\\' => 17,
+        ),
         'E' => 
         array (
             'Egulias\\EmailValidator\\' => 23,
@@ -511,6 +516,14 @@ class ComposerStaticInit2e074b178cf99c894ccdda33ec3f7bde
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'Intervention\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/image/src',
+        ),
+        'Intervention\\Gif\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/gif/src',
         ),
         'Egulias\\EmailValidator\\' => 
         array (

@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 
 #[Route("/admin/vehicules", name: "admin_vehicle_")]
 #[IsGranted("ROLE_ADMIN")]
@@ -55,19 +57,34 @@ class VehicleController extends AbstractController
                 $images = $form->get('images')->getData();
                 $images_directory = $this->getParameter('kernel.project_dir').'/public/uploads/';
                 foreach ($images as $imageFile) {
+
                     $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
 
-                    // Move the file to the directory where images are stored
-                    try {
-                        $imageFile->move(
-                            $images_directory,
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        // Handle exception if something happens during file upload
-                    }
+                    $driver = new GdDriver(); 
+
+                    // Crée une instance de ImageManager avec le pilote choisi
+                    $imageManager = new ImageManager($driver);
+
+                    // Charge l'image
+                    $image = $imageManager->read($imageFile->getPathname());
+
+                    // Redimensionne l'image
+                    $image->resize(700, 500);
+
+                    // Enregistre l'image redimensionnée
+                    $image->save($images_directory.$newFilename);
+
+                    // // Move the file to the directory where images are stored
+                    // try {
+                    //     $imageFile->move(
+                    //         $images_directory,
+                    //         $newFilename
+                    //     );
+                    // } catch (FileException $e) {
+                    //     // Handle exception if something happens during file upload
+                    // }
 
                     // Create new Image entity and set its properties
                     $image = new Image();
