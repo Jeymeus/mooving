@@ -48,5 +48,9 @@ availability_delete:
 search_availability:
     path: /recherche
     controller: App\Controller\SearchController::searchAvailability
+
+search_vehicle:
+    path: /recherche/vehicules
+    controller: App\Controller\HomeController::search
    
 

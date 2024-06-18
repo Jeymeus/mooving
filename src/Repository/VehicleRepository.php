@@ -24,6 +24,31 @@ class VehicleRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int $id The ID of the vehicle to find.
+     * @return Vehicle|null The vehicle with the specified ID, or null if no such vehicle is found.
+     */
+    public function findOneById(int $id): ?Vehicle
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
+
+    /**
+     * Recherche des véhicules par marque ou modèle.
+     *
+     * @param string $query La requête de recherche (marque ou modèle).
+     * @return Vehicle[] Les véhicules correspondant à la requête de recherche.
+     */
+    public function findBySearchQuery(string $query): array
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.brand LIKE :query OR v.model LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    /**
      * @return Vehicle[]
      * @return array<Vehicle>
      */

@@ -106,6 +106,24 @@ div.button-enter {
     margin-bottom: 10px;
 }
 
+.display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.wdth1 {
+    width: 15%;
+}
+
+.wdth25 {
+    width: 25%;
+}
+
+.wdth40 {
+    width: 40%;
+}
 
 
 @keyframes slideIn {

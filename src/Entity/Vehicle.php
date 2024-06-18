@@ -40,9 +40,13 @@ class Vehicle
     #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Image::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $images;
 
+    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Availability::class)]
+    private Collection $availabilities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->availabilities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,5 +158,34 @@ class Vehicle
             $this->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $brand . '-' . $model), '-'));
         }
     }
+
+    public function getAvailabilities(): Collection
+    {
+        return $this->availabilities;
+    }
+
+    public function addAvailability(Availability $availability): self
+    {
+        if (!$this->availabilities->contains($availability)) {
+            $this->availabilities[] = $availability;
+            $availability->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvailability(Availability $availability): self
+    {
+        if ($this->availabilities->removeElement($availability)) {
+            // set the owning side to null (unless already changed)
+            if ($availability->getVehicle() === $this) {
+                $availability->setVehicle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }
 

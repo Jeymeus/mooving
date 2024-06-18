@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Véhicule{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="title">{{ vehicle.brand }} {{ vehicle.model }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                {% if vehicle.images.first %}
+                    <img src="{{ asset(vehicle.images.first.url) }}" class="img-fluid" alt="Image du Véhicule">
+                {% else %}
+                    <img src="{{ asset('images/default_vehicle.jpg') }}" class="img-fluid" alt="Image du Véhicule">
+                {% endif %}
+                {% if vehicle.images|length > 1 %}
+                    <div class="mt-3">
+                        <h4>Autres images :</h4>
+                        <div class="row">
+                            {% for image in vehicle.images|slice(1) %}
+                                <div class="col-4 mb-2">
+                                    <img src="{{ asset(image.url) }}" class="img-fluid" alt="Image du Véhicule">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <p>Marque : {{ vehicle.brand }}</p>
+                <p>Modèle : {{ vehicle.model }}</p>
+                <h3>Disponibilités :</h3>
+                {% if vehicle.availabilities|length > 0 %}
+                    <ul>
+                        {% for availability in vehicle.availabilities %}
+                            <li>{{ availability.startDate|date('d/m/Y') }} - {{ availability.endDate|date('d/m/Y') }}</li>
+                            {# Ajoutez d'autres détails de disponibilité si nécessaire #}
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ path('reservation') }}" class="btn btn-primary">Réserver</a>
+                {% else %}
+                    <p>Aucune disponibilité pour le moment !</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

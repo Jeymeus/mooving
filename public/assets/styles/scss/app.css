@@ -26,7 +26,7 @@ section.home {
 
 h1.title-home {
   position: relative;
-  top: 0%;
+  top: 8%;
   /* Positionne le titre au milieu de l'écran */
   left: -100%;
   /* Commence hors de l'écran à gauche */
@@ -40,7 +40,7 @@ h1.title-home {
   /* Rendre le texte transparent pour voir le dégradé */
   font-size: 220px;
   /* Taille de police pour le titre */
-  margin-left: 55px;
+  margin-left: 40px;
   /* Enlever les marges par défaut */
 }
 
@@ -101,6 +101,25 @@ div.button-enter {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.wdth1 {
+  width: 15%;
+}
+
+.wdth25 {
+  width: 25%;
+}
+
+.wdth40 {
+  width: 40%;
 }
 
 @keyframes slideIn {

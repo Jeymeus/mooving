@@ -11,14 +11,16 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-warning fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ path('home') }}">
-                    <img src="{{ asset('assets/images/logo.png') }}" class="logo" alt="logo">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <div>
+                <div class="display">
+                    <div class="wdth15">
+                        <a class="navbar-brand" href="{{ path('home') }}">
+                            <img src="{{ asset('assets/images/logo.png') }}" class="logo" alt="logo">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse wdth40" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{ path('vehicles') }}">Liste des véhicules</a>
@@ -28,17 +30,25 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div class="ms-auto d-flex">
-                    {% if app.user %}
-                        <div class="nav-link">Bonjour, {{ app.user.username }}</div>
-                        <div class="ms-1">
-                            <a class="btn btn-warning" href="{{ path('app_logout') }}">Déconnexion</a>
-                        </div>
-                    {% else %}
-                        <a class="btn btn-warning" href="{{ path('app_login') }}">Connexion</a>
-                        <a class="btn btn-warning" href="{{ path('app_register') }}">Inscription</a>
-                    {% endif %}
+                    <div class="wdth40">
+                        <form class="form-inline justify-content-center display" action="{{ path('search_vehicle') }}" method="GET">
+                            <div class="form-group wdth40">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un véhicule" aria-label="Search" name="query">
+                            </div>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+                        </form>
+                    </div>
+                    <div class="wdth15">
+                        {% if app.user %}
+                            <div class="nav-link">Bonjour, {{ app.user.username }}</div>
+                            <div class="ms-1">
+                                <a class="btn btn-warning" href="{{ path('app_logout') }}">Déconnexion</a>
+                            </div>
+                        {% else %}
+                            <a class="btn btn-warning" href="{{ path('app_login') }}">Connexion</a>
+                            <a class="btn btn-warning" href="{{ path('app_register') }}">Inscription</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </nav>
