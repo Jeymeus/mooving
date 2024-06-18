@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Véhicules{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="title">Liste des Véhicules</h1>
+
+        {% if vehicles is empty %}
+            <p>Une erreure est survenue, Merci de réessayer.</p>
+        {% else %}
+            <div class="row custom-row">
+                {% for vehicle in vehicles %}
+                    <div class="col-md-4 mb-4 custom-col">
+                        <div class="card custom-card">
+                            {% if vehicle.images.first %}
+                                <img src="{{ asset(vehicle.images.first.url) }}" class="card-img-top custom-img" alt="Image du Véhicule">
+                            {% else %}
+                                <img src="{{ asset('images/default_vehicle.jpg') }}" class="card-img-top custom-img" alt="Image du Véhicule">
+                            {% endif %}
+                            <div class="card-body custom-body">
+                                <h5 class="card-title custom-title">{{ vehicle.brand }} {{ vehicle.model }}</h5>
+                                {# Ajoutez d'autres détails du véhicule si nécessaire #}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

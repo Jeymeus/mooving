@@ -33,7 +33,7 @@ class AvailabilityController extends AbstractController
 
             $this->addFlash('success', 'Disponibilité ajoutée avec succès.');
 
-            return $this->redirectToRoute('vehicle_index');
+            return $this->redirectToRoute('admin_vehicle_index');
         }
 
         return $this->render('availability/create.html.twig', [

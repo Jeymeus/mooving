@@ -3,31 +3,33 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    <div class="container">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
 
-    <h1 class="h3 mt-3 mb-3 font-weight-normal">Inscription</h1>
+        <h1 class="h3 mt-3 mb-3 font-weight-normal">Inscription</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_errors(registrationForm) }}
+        {{ form_start(registrationForm) }}
+            {{ form_errors(registrationForm) }}
 
-        <label for="{{ registrationForm.username.vars.id }}">Pseudo</label>
-        {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.username.vars.id, 'required': 'required', 'autofocus': 'autofocus'}}) }}
-        
-        <label for="{{ registrationForm.email.vars.id }}">Adresse email</label>
-        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.email.vars.id, 'required': 'required'}}) }}
-        
-        <label for="{{ registrationForm.plainPassword.vars.id }}">Mot de passe</label>
-        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.plainPassword.vars.id, 'required': 'required'}}) }}
-        
-        <div class="checkbox mb-3">
-            {{ form_widget(registrationForm.agreeTerms, {'attr': {'id': registrationForm.agreeTerms.vars.id}}) }}
-            <label for="{{ registrationForm.agreeTerms.vars.id }}">
-                Accepte les conditions générales d’utilisation
-            </label>
-        </div>
+            <label for="{{ registrationForm.username.vars.id }}">Pseudo</label>
+            {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.username.vars.id, 'required': 'required', 'autofocus': 'autofocus'}}) }}
+            
+            <label for="{{ registrationForm.email.vars.id }}">Adresse email</label>
+            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.email.vars.id, 'required': 'required'}}) }}
+            
+            <label for="{{ registrationForm.plainPassword.vars.id }}">Mot de passe</label>
+            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.plainPassword.vars.id, 'required': 'required'}}) }}
+            
+            <div class="checkbox mb-3">
+                {{ form_widget(registrationForm.agreeTerms, {'attr': {'id': registrationForm.agreeTerms.vars.id}}) }}
+                <label for="{{ registrationForm.agreeTerms.vars.id }}">
+                    Accepte les conditions générales d’utilisation
+                </label>
+            </div>
 
-        <button class="btn btn-lg btn-warning mt-2" type="submit">S'inscrire</button>
-    {{ form_end(registrationForm) }}
+            <button class="btn btn-lg btn-warning mt-2" type="submit">S'inscrire</button>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

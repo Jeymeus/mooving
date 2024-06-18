@@ -76,16 +76,7 @@ class VehicleController extends AbstractController
                     // Enregistre l'image redimensionnée
                     $image->save($images_directory.$newFilename);
 
-                    // // Move the file to the directory where images are stored
-                    // try {
-                    //     $imageFile->move(
-                    //         $images_directory,
-                    //         $newFilename
-                    //     );
-                    // } catch (FileException $e) {
-                    //     // Handle exception if something happens during file upload
-                    // }
-
+                 
                     // Create new Image entity and set its properties
                     $image = new Image();
                     $image->setFileName($newFilename);

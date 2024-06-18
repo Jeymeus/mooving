@@ -1,3 +1,5 @@
+console.log("delete.js chargé");
+
 window.onload = () => {
 
     const deleteButtons = document.querySelectorAll("[data-delete]");

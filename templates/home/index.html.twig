@@ -3,16 +3,11 @@
 {% block title %}Bienvenue{% endblock %}
 
 {% block body %}
-    
+    <section class="home">
+        <h1 class="title-home">MOOVING</h1>
+        <div class="my-3 text-center button-enter">
+            <a class="btn btn-warning text-center" href="{{ path('admin_vehicle_index')}}">C'est par ici</a>
+        </div>
+    </section>
 
-    <h1 class="title">MOOVING</h1>
-
-    
-
-    <div class="my-3 text-center">
-    <a class="btn btn-warning text-center" href="{{ path('admin_vehicle_index')}}">C'est par ici</a>
-    </div>
-
-    <div style="background-color: blue; width: 700px; height: 500px;"></div>
-        
 {% endblock %}

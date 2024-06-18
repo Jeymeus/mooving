@@ -50,4 +50,10 @@ class Image
 
         return $this;
     }
+
+    public function getUrl(): string
+    {
+        // Récupérer l'URL de l'image en fonction du nom du fichier
+        return '/uploads/' . $this->getFileName();
+    }
 }
