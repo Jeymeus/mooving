@@ -32,17 +32,12 @@ class Reservation
     private $user;
 
     /**
-     * @var Collection<int, Vehicle>
+     * @var Vehicle|null
      */
-    #[ORM\ManyToMany(targetEntity: Vehicle::class, inversedBy: 'reservations')]
-    private Collection $vehicle;
+    #[ORM\ManyToOne(targetEntity: Vehicle::class, inversedBy: 'reservations')]
+    private $vehicle;
 
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
-        $this->vehicle = new ArrayCollection();
-    }
-
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -84,9 +79,6 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
     public function getUser(): ?User
     {
         return $this->user;
@@ -99,26 +91,14 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Vehicle>
-     */
-    public function getVehicle(): Collection
+    public function getVehicle(): ?Vehicle
     {
         return $this->vehicle;
     }
 
-    public function addVehicle(Vehicle $vehicle): static
+    public function setVehicle(?Vehicle $vehicle): static
     {
-        if (!$this->vehicle->contains($vehicle)) {
-            $this->vehicle->add($vehicle);
-        }
-
-        return $this;
-    }
-
-    public function removeVehicle(Vehicle $vehicle): static
-    {
-        $this->vehicle->removeElement($vehicle);
+        $this->vehicle = $vehicle;
 
         return $this;
     }

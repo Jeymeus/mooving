@@ -46,8 +46,8 @@ class Vehicle
     /**
      * @var Collection<int, Reservation>
      */
-    #[ORM\ManyToMany(targetEntity: Reservation::class, mappedBy: 'vehicle')]
-    private Collection $reservations;
+    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Reservation::class)]
+    private $reservations;
 
     public function __construct()
     {
@@ -205,7 +205,7 @@ class Vehicle
     {
         if (!$this->reservations->contains($reservation)) {
             $this->reservations->add($reservation);
-            $reservation->addVehicle($this);
+            $reservation->setVehicle($this);
         }
 
         return $this;
@@ -214,7 +214,7 @@ class Vehicle
     public function removeReservation(Reservation $reservation): static
     {
         if ($this->reservations->removeElement($reservation)) {
-            $reservation->removeVehicle($this);
+            $reservation->setVehicle(null);
         }
 
         return $this;

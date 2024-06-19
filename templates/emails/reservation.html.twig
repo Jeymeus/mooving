@@ -1,0 +1,19 @@
+{# templates/emails/reservation.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvelle Réservation</title>
+</head>
+<body>
+    <h1>Nouvelle Réservation</h1>
+    <p>Vous avez reçu une nouvelle réservation avec les détails suivants :</p>
+    <ul>
+        <li><strong>Utilisateur :</strong> {{ reservation.user.username }} ({{ reservation.user.email }})</li>
+        <li><strong>Date de début :</strong> {{ reservation.start_date|date('d/m/Y') }}</li>
+        <li><strong>Date de fin :</strong> {{ reservation.end_date|date('d/m/Y') }}</li>
+        <li><strong>Message :</strong> {{ reservation.message }}</li>
+        <li><strong>Véhicule :</strong> {{ reservation.vehicle.brand }} {{ reservation.vehicle.model }}</li>
+    </ul>
+</body>
+</html>
