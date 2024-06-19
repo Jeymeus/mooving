@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title %}Suppression d'une disponibilité{% endblock %}
 
@@ -16,10 +16,10 @@
             <li>Statut : {{ availability.status ? 'Disponible' : 'Non disponible' }}</li>
         </ul>
 
-        <form action="{{ path('availability_delete', {'slug': vehicle.slug, 'id': availability.id}) }}" method="post">
+        <form action="{{ path('admin_availability_delete', {'slug': vehicle.slug, 'id': availability.id}) }}" method="post">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" class="btn btn-danger mt-3">Oui, supprimer</button>
         </form>
-        <a href="{{ path('availability_show', {'slug': vehicle.slug}) }}" class="btn btn-secondary mt-3">Non, annuler</a>
+        <a href="{{ path('admin_availability_show', {'slug': vehicle.slug}) }}" class="btn btn-secondary mt-3">Non, annuler</a>
     </div>
 {% endblock %}

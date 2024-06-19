@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Vehicle;
 use App\Repository\AvailabilityRepository;
@@ -10,7 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+
+#[Route("admin/disponibilites", name: "admin_availability_")]
 class AvailabilityController extends AbstractController
 {
     /**
@@ -20,6 +23,7 @@ class AvailabilityController extends AbstractController
         * @param EntityManagerInterface $entityManager The Doctrine entity manager.
         * @return Response A HTTP response object.
     */
+    #[Route('/ajouter', name: 'create')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $availability = new Availability();
@@ -36,13 +40,13 @@ class AvailabilityController extends AbstractController
             return $this->redirectToRoute('admin_vehicle_index');
         }
 
-        return $this->render('availability/create.html.twig', [
+        return $this->render('admin/availability/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * #[Route('/disponibilites/{slug}', name: 'availability_show')]
+     * #[Route('/{slug}', name: 'availability_show')]
      * 
      * Edits an existing availability record.
      * @param Request $request The HTTP request object.
@@ -52,6 +56,7 @@ class AvailabilityController extends AbstractController
      * @return Response A HTTP response object.
      * 
      */
+    #[Route('/{slug}', name: 'show')]
     public function show(string $slug, AvailabilityRepository $availabilityRepository, EntityManagerInterface $entityManager): Response{
         // Récupérer le véhicule en utilisant le slug
         $vehicleRepository = $entityManager->getRepository(Vehicle::class);
@@ -64,14 +69,14 @@ class AvailabilityController extends AbstractController
         // Récupérer les disponibilités du véhicule spécifique
         $availabilities = $availabilityRepository->findByVehicle($vehicle);
 
-        return $this->render('availability/show.html.twig', [
+        return $this->render('admin/availability/show.html.twig', [
             'vehicle' => $vehicle,
             'availabilities' => $availabilities,
         ]);
     }
 
     /**
-     * #[Route('/disponibilites/{slug}/{id}/modifier', name: 'availability_edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
+     * #[Route('/{slug}/{id}/modifier', name: 'availability_edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
      *
      * Shows a confirmation page for deleting an availability record.
      * @param string $slug The slug of the vehicle.
@@ -80,6 +85,7 @@ class AvailabilityController extends AbstractController
      * @return Response A HTTP response object.
      *
     */
+    #[Route('/{slug}/{id}/modifier', name: 'edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, string $slug, int $id): Response
     {
         $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
@@ -102,17 +108,17 @@ class AvailabilityController extends AbstractController
 
             $this->addFlash('success', 'Disponibilité modifiée avec succès.');
 
-            return $this->redirectToRoute('availability_show', ['slug' => $vehicle->getSlug()]);
+            return $this->redirectToRoute('admin_availability_show', ['slug' => $vehicle->getSlug()]);
         }
 
-        return $this->render('availability/edit.html.twig', [
+        return $this->render('admin/availability/edit.html.twig', [
             'form' => $form->createView(),
             'vehicle' => $vehicle,
         ]);
     }
 
     /**
-     * #[Route('/disponibilites/{slug}/{id}/confirmer', name: 'availability_delete_confirm', methods: ['GET'])]
+     * #[Route('/{slug}/{id}/confirmer', name: 'availability_delete_confirm', methods: ['GET'])]
      *
      * Shows a confirmation page for deleting an availability record.
      * @param string $slug The slug of the vehicle.
@@ -121,6 +127,7 @@ class AvailabilityController extends AbstractController
      * @return Response A HTTP response object.
      *
     */
+    #[Route('/{slug}/{id}/confirmer', name: 'delete_confirm', methods: ['GET'])]
     public function deleteConfirm(string $slug, int $id, EntityManagerInterface $entityManager): Response
     {
         $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
@@ -135,14 +142,14 @@ class AvailabilityController extends AbstractController
             throw $this->createNotFoundException('La disponibilité demandée n\'a pas été trouvée.');
         }
         
-        return $this->render('availability/delete_confirm.html.twig', [
+        return $this->render('admin/availability/delete_confirm.html.twig', [
             'vehicle' => $vehicle,
             'availability' => $availability,
         ]);
     }
     
     /**
-     * #[Route('/disponibilites/{slug}/{id}/supprimer', name: 'availability_delete', methods: ['DELETE'])]
+     * #[Route('/{slug}/{id}/supprimer', name: 'availability_delete', methods: ['DELETE'])]
      *
      * Deletes an existing availability record.
      *
@@ -153,6 +160,7 @@ class AvailabilityController extends AbstractController
      * @return Response A HTTP response object.
      *
     */
+    #[Route('/{slug}/{id}/supprimer', name: 'delete', methods: ['DELETE'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, string $slug, int $id): Response
     {
         $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
@@ -172,7 +180,7 @@ class AvailabilityController extends AbstractController
 
         $this->addFlash('success', 'Disponibilité supprimée avec succès.');
 
-        return $this->redirectToRoute('vehicle_index');
+        return $this->redirectToRoute('admin_vehicle_index');
     }
 
 }

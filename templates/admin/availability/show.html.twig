@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 {% block title %}Disponibilités{% endblock %}
 
 
@@ -15,8 +15,8 @@
                         <li>Prix par jour : {{ availability.pricePerDay }}</li>
                         <li>Statut : {{ availability.status ? 'Disponible' : 'Non disponible' }}</li>
                     </ul>
-                    <a href="{{ path('availability_edit', {'slug': vehicle.slug, 'id': availability.id}) }}" class="btn btn-warning mt-3">Modifier</a>
-                    <a href="{{ path('availability_delete_confirm', {'slug': vehicle.slug, 'id': availability.id}) }}" class="btn btn-danger mt-3">Supprimer</a>
+                    <a href="{{ path('admin_availability_edit', {'slug': vehicle.slug, 'id': availability.id}) }}" class="btn btn-warning mt-3">Modifier</a>
+                    <a href="{{ path('admin_availability_delete_confirm', {'slug': vehicle.slug, 'id': availability.id}) }}" class="btn btn-danger mt-3">Supprimer</a>
                 </div>
             </div>
         {% endfor %}
