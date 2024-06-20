@@ -40,7 +40,7 @@ class Vehicle
     #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Image::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Availability::class)]
+    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Availability::class,)]
     private Collection $availabilities;
 
     /**

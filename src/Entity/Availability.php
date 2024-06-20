@@ -18,7 +18,7 @@ class Availability
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'availabilities')]
     private ?Vehicle $vehicle = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]

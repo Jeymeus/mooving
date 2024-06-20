@@ -36,7 +36,7 @@
                             {# Ajoutez d'autres détails de disponibilité si nécessaire #}
                         {% endfor %}
                     </ul>
-                    <a href="{{ path('reservation') }}" class="btn btn-primary">Réserver</a>
+                    <a href="{{ path('reservation', {'vehicleId': vehicle.id}) }}" class="btn btn-primary">Réserver</a>
                 {% else %}
                     <p>Aucune disponibilité pour le moment !</p>
                 {% endif %}

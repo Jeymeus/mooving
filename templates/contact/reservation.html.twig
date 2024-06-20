@@ -1,48 +1,46 @@
-{# {% extends 'base.html.twig' %}
+{# templates/reservation/new.html.twig #}
+{% extends 'base.html.twig' %}
 
-{% block title %}Réservation{% endblock %}
+{% block title %}Nouvelle Réservation{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1 class="mt-4 mb-4">Réservation</h1>
-        {% if is_granted('ROLE_VERIFIED') %}
-            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+        <h1 class="mt-4 mb-4">Nouvelle Réservation</h1>
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'value': app.user.name, 'readonly': 'readonly'}}) }}
-                    {{ form_errors(form.name) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'value': app.user.email, 'readonly': 'readonly'}}) }}
-                    {{ form_errors(form.email) }}
-                </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                {{ form_label(form.start_date, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.start_date, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.start_date) }}
             </div>
-
-            <div class="mb-3">
-                {{ form_label(form.message, null, {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.message) }}
+            <div class="col-md-6">
+                {{ form_label(form.end_date, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.end_date, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.end_date) }}
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Envoyer</button>
-            {{ form_end(form) }}
-        {% else %}
-            <p>Vous devez être un utilisateur vérifié pour accéder à cette page.</p>
-        {% endif %}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                {{ form_label(form.user, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.user) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.vehicle, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.vehicle, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.vehicle) }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.message, null, {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.message) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        {{ form_end(form) }}
     </div>
-{% endblock %} #}
-{% extends 'base.html.twig' %}
-
-{% block title %}New Reservation{% endblock %}
-
-{% block body %}
-<h1>Create new Reservation</h1>
-
-{{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
 {% endblock %}

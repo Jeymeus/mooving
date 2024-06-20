@@ -3,10 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -16,10 +15,13 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message: 'La date ne peut pas être vide.')]
     private ?\DateTimeInterface $start_date = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message: 'La date ne peut pas être vide.')]
+    #[Assert\GreaterThan(propertyPath: "start_date", message: "La date de fin doit être postérieure à la date de début.")]
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\Column(length: 500)]
@@ -37,7 +39,7 @@ class Reservation
     #[ORM\ManyToOne(targetEntity: Vehicle::class, inversedBy: 'reservations')]
     private $vehicle;
 
-   
+
     public function getId(): ?int
     {
         return $this->id;
@@ -48,7 +50,7 @@ class Reservation
         return $this->start_date;
     }
 
-    public function setStartDate(\DateTimeInterface $start_date): static
+    public function setStartDate(?\DateTimeInterface $start_date): static
     {
         $this->start_date = $start_date;
 
@@ -60,7 +62,7 @@ class Reservation
         return $this->end_date;
     }
 
-    public function setEndDate(\DateTimeInterface $end_date): static
+    public function setEndDate(?\DateTimeInterface $end_date): static
     {
         $this->end_date = $end_date;
 
