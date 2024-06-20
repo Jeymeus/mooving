@@ -21,6 +21,7 @@ section.home {
     background-size: cover;
 }
 
+
 .title {
     margin-top: 100px;
 }
@@ -96,7 +97,7 @@ div.button-enter {
 
 /* Effet de zoom au survol */
 .custom-card:hover .custom-card-body {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 /* Styles pour la nouvelle classe custom-title */
@@ -104,6 +105,10 @@ div.button-enter {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+.custom-link {
+    text-decoration: none;
 }
 
 .display {

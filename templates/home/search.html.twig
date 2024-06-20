@@ -4,16 +4,29 @@
 
 {% block body %}
     <div class="container">
-        <h1>Résultats de la recherche pour "{{ query }}"</h1>
+        <h1 class="title">Résultats de la recherche pour "{{ query }}"</h1>
         {% if vehicles is empty %}
             <p>Aucun résultat trouvé pour "{{ query }}"</p>
         {% else %}
-            <ul>
+            <div class="row custom-row">
                 {% for vehicle in vehicles %}
-                    <li>{{ vehicle.brand }} {{ vehicle.model }}</li>
-                    {# Ajoutez d'autres détails du véhicule si nécessaire #}
+                    <div class="col-md-4 mb-4 custom-col">
+                        <a href="{{ path('details_vehicle', {'id': vehicle.id}) }}" class="custom-link">
+                            <div class="card custom-card">
+                                {% if vehicle.images.first %}
+                                    <img src="{{ asset(vehicle.images.first.url) }}" class="card-img-top custom-img" alt="Image du Véhicule">
+                                {% else %}
+                                    <img src="{{ asset('images/default_vehicle.jpg') }}" class="card-img-top custom-img" alt="Image du Véhicule">
+                                {% endif %}
+                                <div class="card-body custom-card-body">
+                                    <h5 class="card-title custom-title">{{ vehicle.brand }} {{ vehicle.model }}</h5>
+                                    {# Ajoutez d'autres détails du véhicule si nécessaire #}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

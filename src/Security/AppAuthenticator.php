@@ -51,7 +51,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $redirectUrl = $this->urlGenerator->generate('admin_vehicle_index'); 
+        $redirectUrl = $this->urlGenerator->generate('home'); 
         return new RedirectResponse($redirectUrl);
     }
 
