@@ -48,8 +48,10 @@ class ReservationController extends AbstractController
                     ->subject('Nouvelle réservation')
                     ->htmlTemplate('emails/reservation.html.twig')
                     ->context(['reservation' => $reservation]);
-
-                $mailer->send($mail);
+                    // dd($mail);
+                    
+                    $mailer->send($mail);
+                    // dd('test');
 
                 $this->addFlash('success', 'Votre réservation a bien été envoyée');
                 return $this->redirectToRoute('home');

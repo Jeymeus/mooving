@@ -40,13 +40,13 @@ class Vehicle
     #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Image::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Availability::class,)]
+    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Availability::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $availabilities;
 
     /**
      * @var Collection<int, Reservation>
      */
-    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Reservation::class, cascade: ['persist'], orphanRemoval: true )]
     private $reservations;
 
     public function __construct()
