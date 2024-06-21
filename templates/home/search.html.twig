@@ -8,9 +8,9 @@
         {% if vehicles is empty %}
             <p>Aucun résultat trouvé pour "{{ query }}"</p>
         {% else %}
-            <div class="row custom-row">
+            <div id="card" class="row custom-row">
                 {% for vehicle in vehicles %}
-                    <div class="col-md-4 mb-4 custom-col">
+                    <div class="col-md-4 mb-4 custom-col card-vehicle">
                         <a href="{{ path('details_vehicle', {'id': vehicle.id}) }}" class="custom-link">
                             <div class="card custom-card">
                                 {% if vehicle.images.first %}
