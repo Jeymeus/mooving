@@ -14,13 +14,14 @@
             {{ form_errors(registrationForm) }}
 
             <label for="{{ registrationForm.username.vars.id }}">Pseudo</label>
-            {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.username.vars.id, 'required': 'required', 'autofocus': 'autofocus'}}) }}
+            {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control mb-4', 'required': 'required', 'autofocus': 'autofocus'}}) }}
             
             <label for="{{ registrationForm.email.vars.id }}">Adresse email</label>
-            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.email.vars.id, 'required': 'required'}}) }}
-            
+            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+             
             <label for="{{ registrationForm.plainPassword.vars.id }}">Mot de passe</label>
-            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-4', 'id': registrationForm.plainPassword.vars.id, 'required': 'required'}}) }}
+            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            <div id="password-feedback" class="mb-3"></div>
             
             <div class="checkbox mb-3">
                 {{ form_widget(registrationForm.agreeTerms, {'attr': {'id': registrationForm.agreeTerms.vars.id}}) }}
