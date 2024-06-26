@@ -1,5 +1,5 @@
 function validatePassword() {
-    const passwordInput = document.getElementById('{{ registrationForm.plainPassword.vars.id }}');
+    const passwordInput = document.getElementById('registration_form_plainPassword');
     const feedback = document.getElementById('password-feedback');
 
     if (!passwordInput || !feedback) {
