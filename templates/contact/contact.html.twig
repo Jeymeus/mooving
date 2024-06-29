@@ -26,6 +26,12 @@
                 {{ form_errors(form.message) }}
             </div>
 
+            <div class="mb-3">
+                {{ form_label(form.enterprise, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.enterprise, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.enterprise) }}
+            </div>
+
             <button type="submit" class="btn btn-primary">Envoyer</button>
             {{ form_end(form) }}
     </div>

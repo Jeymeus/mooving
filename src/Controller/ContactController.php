@@ -21,31 +21,35 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            try {
+            // Check if the 'enterprise' field is not empty
+            if (!empty($data->getEnterprise())) {
+                // Add a success flash message for bot detection
+                $this->addFlash('success', 'Bot détecté, redirection vers la page d\'accueil');
+                // Redirect to the homepage
+                return $this->redirectToRoute('home'); // Assuming 'home' is the route name for the homepage
+            }
 
+            try {
                 $mail = (new TemplatedEmail())
                     ->to('contact@example.fr')
                     ->from($data->getEmail())
                     ->subject('Demande de contact')
                     ->htmlTemplate('emails/contact.html.twig')
                     ->context(['data' => $data]);
-
                 $mailer->send($mail);
-                
-                $this->addFlash('success', 'Votre message a bien été envoyé');
-                return  $this->redirectToRoute('contact');
 
+                $this->addFlash('success', 'Votre message a bien été envoyé');
+                return $this->redirectToRoute('contact');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Une erreur est survenue lors de l\'envoi du message');
-                return  $this->redirectToRoute('contact');
+                $this->addFlash('error', 'Une erreur est survenue lors de l\'envoi du message', $e->getMessage());
+                return $this->redirectToRoute('contact');
             }
         }
-        
+
         return $this->render('contact/contact.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
-
-
 }
+
+

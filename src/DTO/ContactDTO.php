@@ -17,6 +17,8 @@ class ContactDTO
     #[Assert\Length(min: 10, max: 200)]
     private $message;
 
+    private $enterprise;
+
     public function getName(): ?string
     {
         return $this->name;
@@ -51,5 +53,15 @@ class ContactDTO
         $this->message = $message;
 
         return $this;
+    }
+
+    public function getEnterprise(): ?string
+    {
+        return $this->enterprise;
+    }
+
+    public function setEnterprise(string $enterprise): void
+    {
+        $this->enterprise = $enterprise;
     }
 }

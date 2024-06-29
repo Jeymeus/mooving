@@ -4,10 +4,13 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -35,37 +38,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function findOneByEmailorUsername(string $emailOrUsername): ?User
     {
-        return $this->createQueryBuilder('u')
+        $query = $this->createQueryBuilder('u')
             ->where('u.email = :identifier')
             ->orWhere('u.username = :identifier')
             ->setParameter('identifier', $emailOrUsername)
             ->setMaxResults(1)
-            ->getQuery()
-            ->getSingleResult();
+            ->getQuery();
+        
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException | NonUniqueResultException $e) {
+            return null;
+        
         }
+    }
 
-    //    /**
-    //     * @return User[] Returns an array of User objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

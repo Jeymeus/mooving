@@ -27,6 +27,11 @@ class ContactType extends AbstractType
                 'label' => 'Message',
                 'empty_data' => '',
             ] )
+            ->add('enterprise', TextType::class, [
+                'label' => 'Entreprise',
+                'empty_data' => '',
+                'required' => false,
+            ])
         ;
     }
 
