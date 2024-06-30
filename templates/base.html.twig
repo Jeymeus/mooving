@@ -45,7 +45,7 @@
                         </form>
                     </div>
                     <div class="wdth15">
-                        {% if app.user %}
+                        {% if app.user  %}
                             <div class="nav-link">Bonjour, {{ app.user.username }}</div>
                             <div class="ms-1">
                                 <a class="btn btn-warning" href="{{ path('app_logout') }}">Déconnexion</a>

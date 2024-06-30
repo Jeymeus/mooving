@@ -33,10 +33,13 @@
                     <ul>
                         {% for availability in vehicle.availabilities %}
                             <li>{{ availability.startDate|date('d/m/Y') }} - {{ availability.endDate|date('d/m/Y') }}</li>
-                            {# Ajoutez d'autres détails de disponibilité si nécessaire #}
                         {% endfor %}
                     </ul>
-                    <a href="{{ path('reservation', {'vehicleId': vehicle.id}) }}" class="btn btn-primary">Réserver</a>
+                    {% if app.user is not null and app.user.isVerified %}
+                        <a href="{{ path('reservation', {'vehicleId': vehicle.id}) }}" class="btn btn-primary">Réserver</a>
+                    {% else %}
+                        <a href="{{ path('details_vehicle', {'id': vehicle.id}) }}" class="btn btn-secondary mb-2 disabled">Réserver</a><p>Merci de vous connecter et de vérifier votre email</p>
+                    {% endif %}
                 {% else %}
                     <p>Aucune disponibilité pour le moment !</p>
                 {% endif %}
