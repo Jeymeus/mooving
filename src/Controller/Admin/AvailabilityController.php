@@ -56,7 +56,7 @@ class AvailabilityController extends AbstractController
      * @return Response A HTTP response object.
      * 
      */
-    #[Route('/{slug}', name: 'show')]
+    #[Route('/{slug}', name: 'show', requirements: ['slug' => '[a-z0-9\-]+'])]
     public function show(string $slug, AvailabilityRepository $availabilityRepository, EntityManagerInterface $entityManager): Response{
         // Récupérer le véhicule en utilisant le slug
         $vehicleRepository = $entityManager->getRepository(Vehicle::class);

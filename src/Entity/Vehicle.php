@@ -16,15 +16,15 @@ class Vehicle
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "La marque ne peut pas être vide.")]
-    #[Assert\Length(min: 4, max: 50, minMessage: "La marque doit avoir au moins {{ limit }} caractères.", maxMessage: "La marque ne peut pas avoir plus de {{ limit }} caractères.")]
+    #[Assert\Length(min: 4, minMessage: "La marque doit avoir au moins {{ 3 }} caractères.")]
     #[Assert\Regex(pattern: "/^[\p{L}\p{N}\s\-\-']+$/u", message: "Ceci ne semble pas être une marque de véhicule.")]
     private ?string $brand = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le modèle ne peut pas être vide.")]
-    #[Assert\Length(min: 3, max: 50, minMessage: "Le modèle doit avoir au moins {{ limit }} caractères.", maxMessage: "Le modèle ne peut pas avoir plus de {{ limit }} caractères.")]
+    #[Assert\Length(min: 3, minMessage: "Le modèle doit avoir au moins {{ 3 }} caractères.")]
     #[Assert\Regex(pattern: "/^[\p{L}\p{N}\s\-\-']+$/u", message: "Ceci ne semble pas être un modèle de véhicule.")]
     private ?string $model = null;
 
