@@ -1,31 +1,39 @@
 window.onload = () => {
-
     const deleteButtons = document.querySelectorAll("[data-delete]");
     
-    for( deleteButton of deleteButtons) {
-        deleteButton.addEventListener("click", function(e) {
+    for (let deleteButton of deleteButtons) {
+        deleteButton.addEventListener("click", async function(e) {
             e.preventDefault();
 
-                if(confirm("Voulez-vous supprimer cette image ?")) {
-                    // On envoie une requête AJAX pour supprimer l'image
-                    fetch(this.getAttribute("href"), {
+            if (confirm("Voulez-vous supprimer cette image ?")) {
+                const token = this.dataset.token;
+
+                if (!token) {
+                    alert("Token non trouvé !");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(this.getAttribute("href"), {
                         method: "DELETE",
                         headers: {
                             "X-Requested-With": "XMLHttpRequest",
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({"_token": this.dataset.token})
-                    }).then(
-                    // On récupère la réponse en JSON
-                    response => response.json()
-                    ).then(data => {
-                        if(data.success) {
-                            this.parentElement.remove();
-                        } else {
-                            alert(data.error)
-                        }
-                    }).catch(e => alert(e))
+                        body: JSON.stringify({"_token": token})
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.parentElement.remove();
+                    } else {
+                        alert(data.error || "Une erreur s'est produite");
+                    }
+                } catch (error) {
+                    alert("Une erreur s'est produite : " + error.message);
+                }
             }
-        })
+        });
     }
 }
