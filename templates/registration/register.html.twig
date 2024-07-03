@@ -42,6 +42,16 @@
                 <div id="password-feedback" class="form-text text-muted"></div>
             </div>
 
+            <div class="form-group mb-3">
+                <label for="{{ registrationForm.confirmPassword.vars.id }}">Confirmer le mot de passe</label>
+                {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control' ~ (registrationForm.confirmPassword.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+                {% if registrationForm.confirmPassword.vars.errors|length > 0 %}
+                    <div class="invalid-feedback">
+                        {{ form_errors(registrationForm.confirmPassword) }}
+                    </div>
+                {% endif %}
+            </div>
+
             <div class="form-group form-check mb-3">
                 {{ form_widget(registrationForm.agreeTerms, {'attr': {'id': registrationForm.agreeTerms.vars.id, 'class': 'form-check-input'}}) }}
                 <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
@@ -50,6 +60,18 @@
                 {% if registrationForm.agreeTerms.vars.errors|length > 0 %}
                     <div class="invalid-feedback">
                         {{ form_errors(registrationForm.agreeTerms) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group form-check mb-3">
+                {{ form_widget(registrationForm.agreeRGPD, {'attr': {'id': registrationForm.agreeRGPD.vars.id, 'class': 'form-check-input'}}) }}
+                <label class="form-check-label" for="{{ registrationForm.agreeRGPD.vars.id }}">
+                    J'accepte la politique de confidentialité
+                </label>
+                {% if registrationForm.agreeRGPD.vars.errors|length > 0 %}
+                    <div class="invalid-feedback">
+                        {{ form_errors(registrationForm.agreeRGPD) }}
                     </div>
                 {% endif %}
             </div>

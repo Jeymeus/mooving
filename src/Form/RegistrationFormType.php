@@ -14,39 +14,53 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('username')
-            ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter nos conditions d\'utilisation.',
-                    ]),
-                ],
-            ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de renseigner un mot de passe.',
-                    ]),
-                    new Length([
-                        'min' => 4,
-                        'minMessage' => 'Votre mot de passe doit faire au moins {{ 12 }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
-        ;
-    }
-
+public function buildForm(FormBuilderInterface $builder, array $options): void
+{
+    $builder
+        ->add('username')
+        ->add('email')
+        ->add('agreeTerms', CheckboxType::class, [
+            'mapped' => false,
+            'constraints' => [
+                new IsTrue([
+                    'message' => 'Vous devez accepter nos conditions d\'utilisation.',
+                ]),
+            ],
+        ])
+        ->add('plainPassword', PasswordType::class, [
+            'mapped' => false,
+            'attr' => ['autocomplete' => 'new-password'],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Merci de renseigner un mot de passe.',
+                ]),
+                new Length([
+                    'min' => 12,
+                    'minMessage' => 'Votre mot de passe doit faire au moins {{ 12 }} caractères',
+                    'max' => 4096,
+                ]),
+            ],
+        ])
+        ->add('confirmPassword', PasswordType::class, [
+            'mapped' => false,
+            'label' => 'Confirmer le mot de passe',
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Merci de confirmer votre mot de passe.',
+                ]),
+            ],
+        ])
+        ->add('agreeRGPD', CheckboxType::class, [
+            'mapped' => false,
+            'label' => 'J\'accepte la politique de confidentialité.',
+            'constraints' => [
+                new IsTrue([
+                    'message' => 'Vous devez accepter notre politique de confidentialité pour continuer.',
+                ]),
+            ],
+        ])
+    ;
+}
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
