@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -44,6 +43,7 @@ class VehicleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $entityManager = $doctrine->getManager();
+
             $existingVehicle = $entityManager->getRepository(Vehicle::class)->findOneBy([
                 'brand' => $vehicle->getBrand(),
                 'model' => $vehicle->getModel(),
@@ -52,10 +52,12 @@ class VehicleController extends AbstractController
             if ($existingVehicle !== null) {
                 $this->addFlash('danger', 'Ce véhicule existe déjà.');
             } else {
+                
                 // Handle image uploads
                 /** @var UploadedFile $images */
                 $images = $form->get('images')->getData();
                 $images_directory = $this->getParameter('kernel.project_dir').'/public/uploads/';
+                
                 foreach ($images as $imageFile) {
 
                     $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -71,7 +73,7 @@ class VehicleController extends AbstractController
                     $image = $imageManager->read($imageFile->getPathname());
 
                     // Redimensionne l'image
-                    $image->resize(700, 500);
+                    $image->scale(500);
 
                     // Enregistre l'image redimensionnée
                     $image->save($images_directory.$newFilename);
@@ -80,8 +82,6 @@ class VehicleController extends AbstractController
                     // Create new Image entity and set its properties
                     $image = new Image();
                     $image->setFileName($newFilename);
-                    // je remplace $vehicle->addImage($image); par $image->setVehicle($vehicle);
-                    // $image->setVehicle($vehicle);
                     $vehicle->addImage($image);
 
                     // Persist the Image entity
@@ -109,49 +109,45 @@ class VehicleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $doctrine->getManager();
 
             // Handle image uploads
+            /** @var UploadedFile $images */
             $images = $form->get('images')->getData();
             $images_directory = $this->getParameter('kernel.project_dir').'/public/uploads/';
+            
             foreach ($images as $imageFile) {
+            
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
 
-                // Move the file to the directory where images are stored
-                try {
-                    $imageFile->move(
-                        $images_directory,
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // Handle exception if something happens during file upload
-                }
+                $driver = new GdDriver();
 
+                // Crée une instance de ImageManager avec le pilote choisi
+                $imageManager = new ImageManager($driver);
+
+                // Charge l'image
+                $image = $imageManager->read($imageFile->getPathname());
+
+                // Redimensionne l'image
+                $image->scale(500);
+
+                // Enregistre l'image redimensionnée
+                $image->save($images_directory . $newFilename);
+
+                
                 // Create new Image entity and set its properties
                 $image = new Image();
                 $image->setFileName($newFilename);
-                // $image->setVehicle($vehicle);
                 $vehicle->addImage($image);
 
                 // Persist the Image entity
                 $entityManager->persist($image);
             }
 
-            // Handle image deletions
-            // $existingImages = $vehicle->getImages();
-            // $formImages = $form->get('images')->getData();
-            // foreach ($existingImages as $image) {
-            //     if (!in_array($image, $formImages)) {
-            //         $imagePath = $images_directory . $image->getFileName();
-            //         if (file_exists($imagePath)) {
-            //             unlink($imagePath);
-            //         }
-            //         $entityManager->remove($image);
-            //     }
-            // }
-
+            $entityManager->persist($vehicle);
             $entityManager->flush();
 
             $this->addFlash('success', 'Le véhicule a bien été modifié.');
