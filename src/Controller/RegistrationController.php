@@ -17,59 +17,111 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
+/**
+ * RegistrationController
+ */
 class RegistrationController extends AbstractController
 {
+    /**
+     * RegistrationController constructor
+     * 
+     * @param EmailVerifier $emailVerifier
+     */
     public function __construct(private EmailVerifier $emailVerifier)
     {
     }
 
-    #[Route('/inscription', name: 'app_register')]
+    /**
+     * Handle user registration
+     * 
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param Security $security
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    #[Route('/inscription', name: 'app_register', methods: ['GET', 'POST'])]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
     {
+        // Create a new User entity
         $user = new User();
+
+        // Create the registration form and handle the request
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('plainPassword')->getData();
-            $confirmPassword = $form->get('confirmPassword')->getData();
-            if ($plainPassword !== $confirmPassword) {
-                $this->addFlash('danger', 'Les mots de passe ne correspondent pas.');
+        // Check if the form is submitted
+        if ($form->isSubmitted()) {
+            try {
+                // Retrieve form data and CSRF token
+                $formData = $request->request->all();
+                $csrfToken = $formData['registration_form']['_token'];
+
+                // Explicit CSRF token validation
+                if (!$this->isCsrfTokenValid('registration_form', $csrfToken)) {
+                    throw new InvalidCsrfTokenException();
+                }
+
+                // Check if the form is valid
+                if ($form->isValid()) {
+                    // Get plain and confirm passwords
+                    $plainPassword = $form->get('plainPassword')->getData();
+                    $confirmPassword = $form->get('confirmPassword')->getData();
+
+                    // Check if passwords match
+                    if ($plainPassword !== $confirmPassword) {
+                        $this->addFlash('danger', 'Les mots de passe ne correspondent pas.');
+                        return $this->redirectToRoute('app_register');
+                    } else {
+                        // Hash and set the user's password
+                        $user->setPassword(
+                            $userPasswordHasher->hashPassword(
+                                $user,
+                                $form->get('plainPassword')->getData()
+                            )
+                        );
+
+                        // Persist the user entity and flush to the database
+                        $entityManager->persist($user);
+                        $entityManager->flush();
+
+                        // Send email confirmation to the user
+                        $this->emailVerifier->sendEmailConfirmation(
+                            'app_verify_email',
+                            $user,
+                            (new TemplatedEmail())
+                                ->from(new Address('support@mooving.fr', 'Support'))
+                                ->to($user->getEmail())
+                                ->subject('Merci de confirmer votre email')
+                                ->htmlTemplate('registration/confirmation_email.html.twig')
+                        );
+
+                        // Log the user in and redirect to the main page
+                        return $security->login($user, AppAuthenticator::class, 'main');
+                    }
+                }
+            } catch (InvalidCsrfTokenException $e) {
+                // Handle invalid CSRF token exception
+                $this->addFlash('danger', 'Le jeton CSRF est invalide. Veuillez soumettre le formulaire à nouveau.');
                 return $this->redirectToRoute('app_register');
-            } else {
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                );
-
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                // generate email to the user
-                $this->emailVerifier->sendEmailConfirmation(
-                    'app_verify_email',
-                    $user,
-                    (new TemplatedEmail())
-                        ->from(new Address('support@mooving.fr', 'Support'))
-                        ->to($user->getEmail())
-                        ->subject('Merci de confirmer votre email')
-                        ->htmlTemplate('registration/confirmation_email.html.twig')
-                );
-
-                // do anything else you need here, like send an email
-
-                return $security->login($user, AppAuthenticator::class, 'main');
             }
         }
 
+        // Render the registration form
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
+            'registrationForm' => $form->createView(),
         ]);
     }
 
+    /**
+     * Verify user email
+     * 
+     * @param Request $request
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {

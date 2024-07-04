@@ -1,6 +1,6 @@
 body {
     background-color: bisque;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container {
@@ -47,6 +47,7 @@ body {
 
 
 h1.title-home {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     position: relative;
     top: 8%;
     /* Positionne le titre au milieu de l'écran */
@@ -67,6 +68,7 @@ h1.title-home {
 }
 
 h2.title-home-mobile {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     position: relative;
     top: 8%;
     left: -100%;
