@@ -32,7 +32,7 @@
                 {% if vehicle.availabilities|length > 0 %}
                     <ul>
                         {% for availability in vehicle.availabilities %}
-                            <li>{{ availability.startDate|date('d/m/Y') }} - {{ availability.endDate|date('d/m/Y') }}</li>
+                            <li>{{ availability.startDate|date('d/m/Y') }} - {{ availability.endDate|date('d/m/Y') }}</li><span>Prix par jour : {{ availability.pricePerDay }} €</span>
                         {% endfor %}
                     </ul>
                     {% if app.user is not null and app.user.isVerified %}

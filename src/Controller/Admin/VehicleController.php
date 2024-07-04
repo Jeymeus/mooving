@@ -16,11 +16,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 #[Route("/admin/vehicules", name: "admin_vehicle_")]
 #[IsGranted("ROLE_ADMIN")]
 class VehicleController extends AbstractController
 {
+
+
+    
     #[Route("/", name: "index")]
     public function index(ManagerRegistry $doctrine, Request $request): Response
     {
@@ -31,68 +36,77 @@ class VehicleController extends AbstractController
         ]);
     }
 
-     #[Route("/ajouter", name: "create")]
-    public function create(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, string $images_directory = null)
+    #[Route("/ajouter", name: "create", methods: ['GET', 'POST'])]
+    public function create(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, string $images_directory = null): Response
     {
         $vehicle = new Vehicle();
-        $images = new Image();
 
         $form = $this->createForm(VehicleType::class, $vehicle);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $entityManager = $doctrine->getManager();
-
-            $existingVehicle = $entityManager->getRepository(Vehicle::class)->findOneBy([
-                'brand' => $vehicle->getBrand(),
-                'model' => $vehicle->getModel(),
-            ]);
-
-            if ($existingVehicle !== null) {
-                $this->addFlash('danger', 'Ce véhicule existe déjà.');
-            } else {
+        if ($form->isSubmitted()) {
+            try {
                 
-                // Handle image uploads
-                /** @var UploadedFile $images */
-                $images = $form->get('images')->getData();
-                $images_directory = $this->getParameter('kernel.project_dir').'/public/uploads/';
-                
-                foreach ($images as $imageFile) {
-
-                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                    $driver = new GdDriver(); 
-
-                    // Crée une instance de ImageManager avec le pilote choisi
-                    $imageManager = new ImageManager($driver);
-
-                    // Charge l'image
-                    $image = $imageManager->read($imageFile->getPathname());
-
-                    // Redimensionne l'image
-                    $image->scale(500);
-
-                    // Enregistre l'image redimensionnée
-                    $image->save($images_directory.$newFilename);
-
-                 
-                    // Create new Image entity and set its properties
-                    $image = new Image();
-                    $image->setFileName($newFilename);
-                    $vehicle->addImage($image);
-
-                    // Persist the Image entity
-                    $entityManager->persist($image);
+                $formData = $request->request->all();
+                $csrfToken = $formData['vehicle']['_token'];
+                // Vérification explicite du jeton CSRF
+                if (!$this->isCsrfTokenValid('vehicle', $csrfToken)) {
+                    throw new InvalidCsrfTokenException();
                 }
 
-                $entityManager->persist($vehicle);
-                $entityManager->flush();
+                if ($form->isValid()) {
+                    $entityManager = $doctrine->getManager();
 
-                $this->addFlash('success', 'Le véhicule a bien été ajouté.');
-                return $this->redirectToRoute('admin_vehicle_index');
+                    $existingVehicle = $entityManager->getRepository(Vehicle::class)->findOneBy([
+                        'brand' => $vehicle->getBrand(),
+                        'model' => $vehicle->getModel(),
+                    ]);
+
+                    if ($existingVehicle !== null) {
+                        $this->addFlash('danger', 'Ce véhicule existe déjà.');
+                    } else {
+                        // Handle image uploads
+                        /** @var UploadedFile $images */
+                        $images = $form->get('images')->getData();
+                        $images_directory = $this->getParameter('kernel.project_dir') . '/public/uploads/';
+
+                        foreach ($images as $imageFile) {
+                            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                            $safeFilename = $slugger->slug($originalFilename);
+                            $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                            $driver = new GdDriver();
+
+                            // Crée une instance de ImageManager avec le pilote choisi
+                            $imageManager = new ImageManager($driver);
+
+                            // Charge l'image
+                            $image = $imageManager->read($imageFile->getPathname());
+
+                            // Redimensionne l'image
+                            $image->scale(500);
+
+                            // Enregistre l'image redimensionnée
+                            $image->save($images_directory . $newFilename);
+
+                            // Create new Image entity and set its properties
+                            $imageEntity = new Image();
+                            $imageEntity->setFileName($newFilename);
+                            $vehicle->addImage($imageEntity);
+
+                            // Persist the Image entity
+                            $entityManager->persist($imageEntity);
+                        }
+
+                        $entityManager->persist($vehicle);
+                        $entityManager->flush();
+
+                        $this->addFlash('success', 'Le véhicule a bien été ajouté.');
+                        return $this->redirectToRoute('admin_vehicle_index');
+                    }
+                }
+            } catch (InvalidCsrfTokenException) {
+                $this->addFlash('danger', 'Le jeton CSRF est invalide. Veuillez soumettre le formulaire à nouveau.');
             }
         }
 

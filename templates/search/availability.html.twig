@@ -56,26 +56,28 @@
                 <div class="row custom-row">
                     {% for availability in availabilities %}
                         {% set vehicle = availability.vehicle %}
-                        <div class="col-md-6 mb-4 custom-col">
-                            <div class="card custom-card">
-                                {% if vehicle.images.first %}
-                                    <img src="{{ asset(vehicle.images.first.url) }}" class="card-img-top custom-img" alt="Image du Véhicule">
-                                {% else %}
-                                    <img src="{{ asset('images/default_vehicle.jpg') }}" class="card-img-top custom-img" alt="Image du Véhicule">
-                                {% endif %}
-                                <div class="card-body custom-body">
-                                    <h5 class="card-title custom-title">{{ vehicle.brand }} {{ vehicle.model }}</h5>
-                                    <div class="card mt-3 mb-3">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li>Date de début : {{ availability.startDate|date('d-m-Y') }}</li>
-                                                <li>Date de fin : {{ availability.endDate|date('d-m-Y') }}</li>
-                                                <li>Prix par jour : {{ availability.pricePerDay }}</li>
-                                            </ul>
+                        <div class="col-md-4 mb-4 custom-col card-vehicle">
+                            <a href="{{ path('details_vehicle', {'id': vehicle.id}) }}" class="custom-link">
+                                <div class="card custom-card">
+                                    {% if vehicle.images.first %}
+                                        <img src="{{ asset(vehicle.images.first.url) }}" class="card-img-top custom-img" alt="Image du Véhicule">
+                                    {% else %}
+                                        <img src="{{ asset('images/default_vehicle.jpg') }}" class="card-img-top custom-img" alt="Image du Véhicule">
+                                    {% endif %}
+                                    <div class="card-body custom-card-body">
+                                        <h5 class="card-title custom-title">{{ vehicle.brand }} {{ vehicle.model }}</h5>
+                                        <div class="card mt-3 mb-3">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <li>Date de début : {{ availability.startDate|date('d-m-Y') }}</li>
+                                                    <li>Date de fin : {{ availability.endDate|date('d-m-Y') }}</li>
+                                                    <li>Prix par jour : {{ availability.pricePerDay }}</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
