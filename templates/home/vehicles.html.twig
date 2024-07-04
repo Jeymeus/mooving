@@ -9,9 +9,9 @@
         {% if vehicles is empty %}
             <p>Une erreur est survenue, Merci de réessayer.</p>
         {% else %}
-            <div id="card" class="row custom-row">
+            <section id="card" class="row custom-row">
                 {% for vehicle in vehicles %}
-                    <div class="col-md-4 mb-4 custom-col card-vehicle">
+                    <article class="col-md-4 mb-4 custom-col card-vehicle">
                         <a href="{{ path('details_vehicle', {'id': vehicle.id}) }}" class="custom-link">
                             <div class="card custom-card">
                                 {% if vehicle.images.first %}
@@ -25,9 +25,9 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </article>
                 {% endfor %}
-            </div>
+            </section>
         {% endif %}
     </div>
 {% endblock %}

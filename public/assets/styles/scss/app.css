@@ -60,7 +60,7 @@ h1.title-home {
   /* Enlever les marges par défaut */
 }
 
-h1.title-home-mobile {
+h2.title-home-mobile {
   position: relative;
   top: 8%;
   left: -100%;
@@ -176,6 +176,11 @@ div.button-enter {
 
 @media (max-width: 454px) {
   #none {
+    display: none;
+  }
+}
+@media (max-width: 992px) {
+  #btn_search {
     display: none;
   }
 }

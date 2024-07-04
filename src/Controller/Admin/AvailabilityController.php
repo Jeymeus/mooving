@@ -23,7 +23,7 @@ class AvailabilityController extends AbstractController
         * @param EntityManagerInterface $entityManager The Doctrine entity manager.
         * @return Response A HTTP response object.
     */
-    #[Route('/ajouter', name: 'create')]
+    #[Route('/ajouter', name: 'create', methods: ['GET', 'POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $availability = new Availability();
@@ -56,7 +56,7 @@ class AvailabilityController extends AbstractController
      * @return Response A HTTP response object.
      * 
      */
-    #[Route('/{slug}', name: 'show', requirements: ['slug' => '[a-z0-9\-]+'])]
+    #[Route('/{slug}', name: 'show', requirements: ['slug' => '[a-z0-9\-]+'], methods: ['GET'])]
     public function show(string $slug, AvailabilityRepository $availabilityRepository, EntityManagerInterface $entityManager): Response{
         // Récupérer le véhicule en utilisant le slug
         $vehicleRepository = $entityManager->getRepository(Vehicle::class);
@@ -85,7 +85,7 @@ class AvailabilityController extends AbstractController
      * @return Response A HTTP response object.
      *
     */
-    #[Route('/{slug}/{id}/modifier', name: 'edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
+    #[Route('/{slug}/{id}/modifier', name: 'edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, string $slug, int $id): Response
     {
         $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);

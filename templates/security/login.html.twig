@@ -6,7 +6,7 @@
     <div class="container">
         <form method="post">
             {% if error %}
-                <div class="alert alert-danger title">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="alert alert-danger title">Identifiants incorrects</div>
             {% endif %}
 
             {% if app.user %}
