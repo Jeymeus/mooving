@@ -50,11 +50,8 @@ h1.title-home {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     position: relative;
     top: 8%;
-    /* Positionne le titre au milieu de l'écran */
     left: -100%;
-    /* Commence hors de l'écran à gauche */
     animation: slideIn 1s ease-out 0.3s forwards;
-    /* Animation sur 1 seconde, avec un délai de 0,3 seconde */
     background: linear-gradient(to right, #afadad, #2f2f2f);
     /* Dégradé de blanc cassé à gris foncé */
     -webkit-background-clip: text;
@@ -106,7 +103,6 @@ div.button-enter {
 }
 
 
-/* Ajoutez ce code CSS dans votre fichier CSS personnalisé */
 
 /* Styles pour la nouvelle classe custom-row */
 .custom-row {
@@ -131,6 +127,13 @@ div.button-enter {
     /* Bords arrondis */
     overflow: hidden;
     /* Masque le contenu qui dépasse */
+}
+
+.custom-card-vehicle {
+    width: 48%;
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 20px;
 }
 
 /* Styles pour la nouvelle classe custom-img */
@@ -171,33 +174,41 @@ div.button-enter {
     width: 100%;
 }
 
-.wdth25 {
-    width: 25%;
+.pad_search {
+    padding-right: 20px;
 }
 
-.wdth40 {
-    width: 40%;
+/* Ajustez le style de l'icône selon vos besoins */
+#btn_search svg {
+    width: 1rem;
+    /* Ajustez la taille de l'icône */
+    height: 1rem;
+    fill: currentColor;
+    /* Utilise la couleur courante (définie par le texte du bouton) pour l'icône */
+    pointer-events: none;
+    /* Permet de cliquer à travers l'icône */
 }
 
-.custom-card-vehicle {
-    width: 48%;
-    height: auto;
-    border-radius: 15px;
-    margin-bottom: 20px;
+/* Ajustez la taille du bouton de recherche */
+#btn_search {
+    min-width: 44px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: none;
+    margin-left: 1px;
+    /* Ajustez la largeur minimale du bouton selon vos besoins */
 }
 
-@media (max-width: 454px) {
+#search-input {
+    border-right: none;
+    border: #2f2f2f solid 1px;
+}
+
+@media (max-width: 545px) {
     #none {
         display: none;
     }
 }
-
-@media (max-width: 992px) {
-    #btn_search {
-        display: none;
-    }
-}
-
 
 @keyframes slideIn {
     to {

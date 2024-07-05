@@ -1,5 +1,5 @@
 window.onload = () => {
-    const deleteButtons = document.querySelectorAll("[data-delete]");
+    let deleteButtons = document.querySelectorAll("[data-delete]");
     
     for (let deleteButton of deleteButtons) {
         deleteButton.addEventListener("click", async function(e) {
