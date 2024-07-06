@@ -7,7 +7,6 @@ body {
     margin-top: 70px;
 }
 
-
 .logo {
     width: 50px;
     height: auto;
@@ -21,21 +20,9 @@ body {
     background-size: cover;
 }
 
-.home-mobile {
-    width: 100%;
-    height: 100vh;
-    background: url('/assets/images/home_mobile.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: none;
-}
-
-
 .title {
     margin-top: 100px;
 }
-
-
-
 
 h1.title-home {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -44,49 +31,24 @@ h1.title-home {
     left: -100%;
     animation: slideIn 1s ease-out 0.3s forwards;
     background: linear-gradient(to right, #afadad, #2f2f2f);
-    /* Dégradé de blanc cassé à gris foncé */
-    -webkit-background-clip: text;
-    /* Applique le dégradé uniquement au texte */
-    -webkit-text-fill-color: transparent;
-    /* Rendre le texte transparent pour voir le dégradé */
+    background-clip: text;
+    color: transparent;
     font-size: 220px;
-    /* Taille de police pour le titre */
     margin-left: 40px;
-    /* Enlever les marges par défaut */
-}
-
-h2.title-home-mobile {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    position: relative;
-    top: 8%;
-    left: -100%;
-    animation: slideIn 1s ease-out 0.3s forwards;
-    background: linear-gradient(to right, #afadad, #2f2f2f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 70px;
-    margin-left: 40px;
-    writing-mode: vertical-rl;
-    /* Affiche le texte verticalement de droite à gauche */
-    text-orientation: upright;
-    /* Les caractères sont affichés verticalement */
 }
 
 @media (max-width: 890px) {
+    
     .home {
-        display: none;
+        background: url('/assets/images/home_mobile.jpg') no-repeat center center fixed;
     }
-
-    .home-mobile {
-        display: block;
-    }
-
+    
     h1.title-home {
-        display: none;
-    }
-
-    h2.title-home-mobile {
-        display: block;
+        background: linear-gradient(to top, #c5e419, #a36c07);
+        background-clip: text;
+        font-size: 70px;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
     }
 
 }

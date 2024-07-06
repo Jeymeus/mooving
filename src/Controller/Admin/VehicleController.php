@@ -48,7 +48,7 @@ class VehicleController extends AbstractController
                 
                 $formData = $request->request->all();
                 $csrfToken = $formData['vehicle']['_token'];
-                // Vérification explicite du jeton CSRF
+               
                 if (!$this->isCsrfTokenValid('vehicle', $csrfToken)) {
                     throw new InvalidCsrfTokenException();
                 }
@@ -86,7 +86,7 @@ class VehicleController extends AbstractController
                             $image->scale(500);
 
                             // Enregistre l'image redimensionnée
-                            $image->save($images_directory . $newFilename);
+                            $image->save($images_directory . $newFilename, 50);
 
                             // Create new Image entity and set its properties
                             $imageEntity = new Image();
@@ -145,10 +145,10 @@ class VehicleController extends AbstractController
                 $image = $imageManager->read($imageFile->getPathname());
 
                 // Redimensionne l'image
-                $image->scale(500);
+                $image->scaleDown(width : 500);
 
                 // Enregistre l'image redimensionnée
-                $image->save($images_directory . $newFilename);
+                $image->save($images_directory . $newFilename, 50);
 
                 
                 // Create new Image entity and set its properties
