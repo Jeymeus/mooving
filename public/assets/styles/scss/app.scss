@@ -29,15 +29,6 @@ body {
     display: none;
 }
 
-@media (max-width: 890px) {
-    .home{
-        display: none;
-    }
-    .home-mobile{
-        display: block;
-    }
-    
-}
 
 .title {
     margin-top: 100px;
@@ -82,12 +73,22 @@ h2.title-home-mobile {
 }
 
 @media (max-width: 890px) {
+    .home {
+        display: none;
+    }
+
+    .home-mobile {
+        display: block;
+    }
+
     h1.title-home {
         display: none;
     }
-    h1.title-home-mobile {
+
+    h2.title-home-mobile {
         display: block;
     }
+
 }
 
 @media (max-width: 565px) {
@@ -95,13 +96,6 @@ h2.title-home-mobile {
         top: 16%;
     }
 }
-
-div.button-enter {
-    position: relative;
-    top: 27%;
-    /* Positionne le titre au milieu de l'écran */
-}
-
 
 
 /* Styles pour la nouvelle classe custom-row */

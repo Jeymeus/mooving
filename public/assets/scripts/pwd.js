@@ -40,3 +40,6 @@ function validatePassword() {
 document.addEventListener('DOMContentLoaded', function() {
     validatePassword();
 });
+
+
+

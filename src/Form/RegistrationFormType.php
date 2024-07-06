@@ -37,7 +37,7 @@ public function buildForm(FormBuilderInterface $builder, array $options): void
                 new Length([
                     'min' => 12,
                     'minMessage' => 'Votre mot de passe n\'est pas assez fort',
-                    'max' => 255,
+                    'max' => 4096,
                 ]),
             ],
         ])
