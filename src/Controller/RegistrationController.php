@@ -43,7 +43,7 @@ class RegistrationController extends AbstractController
      * @return Response
      */
     #[Route('/inscription', name: 'app_register', methods: ['GET', 'POST'])]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         // Create a new User entity
         $user = new User();
@@ -73,7 +73,6 @@ class RegistrationController extends AbstractController
                     // Check if passwords match
                     if ($plainPassword !== $confirmPassword) {
                         $this->addFlash('danger', 'Les mots de passe ne correspondent pas.');
-                        return $this->redirectToRoute('app_register');
                     } else {
                         // Hash and set the user's password
                         $user->setPassword(
@@ -98,8 +97,8 @@ class RegistrationController extends AbstractController
                                 ->htmlTemplate('registration/confirmation_email.html.twig')
                         );
 
-                        // Log the user in and redirect to the main page
-                        return $security->login($user, AppAuthenticator::class, 'main');
+                        $this->addFlash('success', 'Votre compte a bien été créé. Un email de confirmation vous a été envoyé.');
+                        return $this->redirectToRoute('home');
                     }
                 }
             } catch (InvalidCsrfTokenException $e) {

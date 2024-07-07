@@ -60,6 +60,7 @@ class VehicleController extends AbstractController
                         'brand' => $vehicle->getBrand(),
                         'model' => $vehicle->getModel(),
                     ]);
+                
 
                     if ($existingVehicle !== null) {
                         $this->addFlash('danger', 'Ce véhicule existe déjà.');
@@ -70,6 +71,23 @@ class VehicleController extends AbstractController
                         $images_directory = $this->getParameter('kernel.project_dir') . '/public/uploads/';
 
                         foreach ($images as $imageFile) {
+
+                            // Get MIME type & size
+                            $mimeType = $imageFile->getMimeType();
+                            $size = $imageFile->getSize();
+
+                             // Check file type
+                            if (!in_array($mimeType, ['image/png', 'image/jpeg', 'image/jpg'])) {
+                                $this->addFlash('danger', 'Le format de l\'image doit être PNG, JPG ou JPEG.');
+                                return $this->redirectToRoute('create');
+                            }
+
+                            // Check file size (max 2 MB)
+                            if ($size > 2 * 1024 * 1024) {
+                                $this->addFlash('danger', 'La taille de l\'image ne doit pas dépasser 2 Mo.');
+                                return $this->redirectToRoute('create');
+                            }
+
                             $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                             $safeFilename = $slugger->slug($originalFilename);
                             $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
