@@ -24,6 +24,7 @@ class ContactType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label' => 'Message',
             ] )
+            // Add the bot field name enterprise, it's a hidden field
             ->add('enterprise', TextType::class, [
                 'label' => 'Entreprise',
                 'required' => false,
@@ -38,3 +39,5 @@ class ContactType extends AbstractType
         ]);
     }
 }
+
+
