@@ -4,9 +4,9 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-home:
-    path: /
-    controller: App\Controller\HomeController::index
+# home:
+#     path: /
+#     controller: App\Controller\HomeController::index
 
 
 # availability_create:
@@ -45,12 +45,12 @@ home:
 #         id: '\d+'
 #     methods: [DELETE]
 
-search_availability:
-    path: /recherche
-    controller: App\Controller\SearchController::searchAvailability
+# search_availability:
+#     path: /recherche
+#     controller: App\Controller\SearchController::searchAvailability
 
-search_vehicle:
-    path: /recherche/vehicules
-    controller: App\Controller\HomeController::search
+# search_vehicle:
+#     path: /recherche/vehicules
+#     controller: App\Controller\HomeController::search
    
 

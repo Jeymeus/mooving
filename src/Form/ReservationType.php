@@ -19,12 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReservationType extends AbstractType
 {
-    // private $security;
-
-    // public function __construct(Security $security)
-    // {
-    //     $this->security = $security;
-    // }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -49,19 +43,19 @@ class ReservationType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'username', // Utilisez le nom d'utilisateur pour l'affichage
+                'choice_label' => 'username', 
                 'label' => 'Pseudo',
                 'data' => $user,
-                'disabled' => true, // Rendre ce champ non modifiable
+                'disabled' => true,
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,
                 'choice_label' => function (Vehicle $vehicle) {
-                    return $vehicle->getBrand() . ' ' . $vehicle->getModel(); // Combine brand and model for display
+                    return $vehicle->getBrand() . ' ' . $vehicle->getModel(); 
                 },
                 'label' => 'Véhicule',
                 'data' => $vehicle,
-                'disabled' => true, // Rendre ce champ non modifiable
+                'disabled' => true,
             ]);
            
     }

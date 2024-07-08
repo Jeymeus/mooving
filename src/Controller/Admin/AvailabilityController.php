@@ -58,7 +58,8 @@ class AvailabilityController extends AbstractController
      */
     #[Route('/{slug}', name: 'show', requirements: ['slug' => '[a-z0-9\-]+'], methods: ['GET'])]
     public function show(string $slug, AvailabilityRepository $availabilityRepository, EntityManagerInterface $entityManager): Response{
-        // Récupérer le véhicule en utilisant le slug
+        
+        // get vehicle by slug
         $vehicleRepository = $entityManager->getRepository(Vehicle::class);
         $vehicle = $vehicleRepository->findOneBy(['slug' => $slug]);
 
@@ -66,7 +67,7 @@ class AvailabilityController extends AbstractController
             throw $this->createNotFoundException('Véhicule non trouvé');
         }
 
-        // Récupérer les disponibilités du véhicule spécifique
+        // get availabilities by vehicle
         $availabilities = $availabilityRepository->findByVehicle($vehicle);
 
         return $this->render('admin/availability/show.html.twig', [

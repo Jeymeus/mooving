@@ -53,7 +53,7 @@ class Image
 
     public function getUrl(): string
     {
-        // Récupérer l'URL de l'image en fonction du nom du fichier
+        // get the path to the images directory
         return '/uploads/' . $this->getFileName();
     }
 }

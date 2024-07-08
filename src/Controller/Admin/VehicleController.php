@@ -38,24 +38,30 @@ class VehicleController extends AbstractController
     #[Route("/ajouter", name: "create", methods: ['GET', 'POST'])]
     public function create(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, string $images_directory = null): Response
     {
+        // Create a new Vehicle instance
         $vehicle = new Vehicle();
 
         $form = $this->createForm(VehicleType::class, $vehicle);
         $form->handleRequest($request);
 
+        // Handle form submission
         if ($form->isSubmitted()) {
             try {
+                
                 
                 $formData = $request->request->all();
                 $csrfToken = $formData['vehicle']['_token'];
                
+                // Check if the CSRF token is valid
                 if (!$this->isCsrfTokenValid('vehicle', $csrfToken)) {
                     throw new InvalidCsrfTokenException();
                 }
 
+                // Check if the form is valid
                 if ($form->isValid()) {
                     $entityManager = $doctrine->getManager();
 
+                    // Check if the vehicle already exists
                     $existingVehicle = $entityManager->getRepository(Vehicle::class)->findOneBy([
                         'brand' => $vehicle->getBrand(),
                         'model' => $vehicle->getModel(),
@@ -79,31 +85,33 @@ class VehicleController extends AbstractController
                              // Check file type
                             if (!in_array($mimeType, ['image/png', 'image/jpeg', 'image/jpg'])) {
                                 $this->addFlash('danger', 'Le format de l\'image doit être PNG, JPG ou JPEG.');
-                                return $this->redirectToRoute('create');
+                                return $this->redirectToRoute('admin_vehicle_create');
                             }
 
                             // Check file size (max 2 MB)
                             if ($size > 2 * 1024 * 1024) {
                                 $this->addFlash('danger', 'La taille de l\'image ne doit pas dépasser 2 Mo.');
-                                return $this->redirectToRoute('create');
+                                return $this->redirectToRoute('admin_vehicle_create');
                             }
 
+                            // Generate a unique filename
                             $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                             $safeFilename = $slugger->slug($originalFilename);
                             $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
+                            // Create an instance of the GdDriver
                             $driver = new GdDriver();
 
-                            // Crée une instance de ImageManager avec le pilote choisi
+                            // Create an instance of ImageManager with the chosen driver
                             $imageManager = new ImageManager($driver);
 
-                            // Charge l'image
+                            // Load the image
                             $image = $imageManager->read($imageFile->getPathname());
 
-                            // Redimensionne l'image
+                            // Resize the image
                             $image->scale(500);
 
-                            // Enregistre l'image redimensionnée
+                            // Save the resized image
                             $image->save($images_directory . $newFilename, 50);
 
                             // Create new Image entity and set its properties
@@ -147,36 +155,54 @@ class VehicleController extends AbstractController
             /** @var UploadedFile $images */
             $images = $form->get('images')->getData();
             $images_directory = $this->getParameter('kernel.project_dir').'/public/uploads/';
-            
+
             foreach ($images as $imageFile) {
-            
+
+                // Get MIME type & size
+                $mimeType = $imageFile->getMimeType();
+                $size = $imageFile->getSize();
+
+                // Check file type
+                if (!in_array($mimeType, ['image/png', 'image/jpeg', 'image/jpg'])) {
+                    $this->addFlash('danger', 'Le format de l\'image doit être PNG, JPG ou JPEG.');
+                    return $this->redirectToRoute('admin_vehicle_edit', ['id' => $vehicle->getId()]);
+                }
+
+                // Check file size (max 2 MB)
+                if ($size > 2 * 1024 * 1024) {
+                    $this->addFlash('danger', 'La taille de l\'image ne doit pas dépasser 2 Mo.');
+                    return $this->redirectToRoute('admin_vehicle_edit', ['id' => $vehicle->getId()]);   
+                }
+
+                // Generate a unique filename
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
+                // Create an instance of the GdDriver
                 $driver = new GdDriver();
 
-                // Crée une instance de ImageManager avec le pilote choisi
+                // Create an instance of ImageManager with the chosen driver
                 $imageManager = new ImageManager($driver);
 
-                // Charge l'image
+                // Load the image
                 $image = $imageManager->read($imageFile->getPathname());
 
-                // Redimensionne l'image
-                $image->scaleDown(width : 500);
+                // Resize the image
+                $image->scale(500);
 
-                // Enregistre l'image redimensionnée
+                // Save the resized image
                 $image->save($images_directory . $newFilename, 50);
 
-                
                 // Create new Image entity and set its properties
-                $image = new Image();
-                $image->setFileName($newFilename);
-                $vehicle->addImage($image);
+                $imageEntity = new Image();
+                $imageEntity->setFileName($newFilename);
+                $vehicle->addImage($imageEntity);
 
                 // Persist the Image entity
-                $entityManager->persist($image);
+                $entityManager->persist($imageEntity);
             }
+
 
             $entityManager->persist($vehicle);
             $entityManager->flush();
@@ -197,6 +223,7 @@ class VehicleController extends AbstractController
     #[Route("/image/{id}/supprimer", name: "delete_image", requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteImage(Image $image, ManagerRegistry $doctrine, Request $request)
     {
+        // get the data from the request
         $data = json_decode($request->getContent(), true);
         
         if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
@@ -219,7 +246,6 @@ class VehicleController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
 
-        // Supprimer les fichiers images associés au véhicule
         $images_directory = $this->getParameter('kernel.project_dir') . '/public/uploads/';
         foreach ($vehicle->getImages() as $image) {
             $image_path = $images_directory . $image->getFileName();
