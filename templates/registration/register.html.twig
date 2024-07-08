@@ -52,7 +52,7 @@
             <div class="form-group form-check mb-3">
                 {{ form_widget(registrationForm.agreeTerms, {'attr': {'id': registrationForm.agreeTerms.vars.id, 'class': 'form-check-input'}}) }}
                 <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
-                    Accepte les conditions générales d’utilisation
+                    J'accepte les conditions générales d’utilisation
                 </label>
                 {% if registrationForm.agreeTerms.vars.errors|length > 0 %}
                     <div class="invalid-feedback">
