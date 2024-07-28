@@ -10,4 +10,17 @@
 /web/uploads/
 /web/media/
 
+<<<<<<< HEAD
 /.vscode/
+=======
+# VSCode directory
+.vscode\extensions.json
+
+# Uploads directory
+public/uploads/
+
+# Environment files
+# .env
+# .env.local
+# .env.test
+>>>>>>> ea3dabbd6e7dc5fb86d9286dd341242ef9e932e4

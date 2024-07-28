@@ -14,11 +14,7 @@
                     <article class="col-md-4 mb-4 custom-col card-vehicle">
                         <a href="{{ path('details_vehicle', {'id': vehicle.id}) }}" class="custom-link">
                             <div class="card custom-card">
-                                {% if vehicle.images.first %}
-                                    <img src="{{ asset(vehicle.images.first.url) }}" class="card-img-top custom-img" alt="{{ vehicle.brand ~ ' ' ~ vehicle.model }}">
-                                {% else %}
-                                    <img src="{{ asset('images/default_vehicle.jpg') }}" class="card-img-top custom-img" alt="{{ vehicle.brand ~ ' ' ~ vehicle.model }}">
-                                {% endif %}
+                                <img src="{{ asset(vehicle.images.first.url) }}" class="card-img-top custom-img" alt="{{ vehicle.brand ~ ' ' ~ vehicle.model }}">
                                 <div class="card-body custom-card-body">
                                     <h5 class="card-title custom-title">{{ vehicle.brand }} {{ vehicle.model }}</h5>
                                 </div>

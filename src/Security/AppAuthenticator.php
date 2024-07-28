@@ -29,6 +29,10 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
     {
     }
 
+    /**
+     * @param Request $request
+     * @return Passport
+     */
     public function authenticate(Request $request): Passport
     {
         $username = $request->getPayload()->getString('username');
@@ -45,6 +49,12 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
+    /**
+     * @param Request $request
+     * @param TokenInterface $token
+     * @param string $firewallName
+     * @return Response|null
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {

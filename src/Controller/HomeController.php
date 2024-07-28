@@ -14,12 +14,8 @@ use Doctrine\ORM\EntityManagerInterface;
 class HomeController extends AbstractController
 {
     
-    /**
-     * #[Route('/', name: 'home')]
-     * 
-     * @return Response A HTTP response object.
-     * 
-    */
+    
+    #[Route('/', name: 'home')]
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
@@ -31,10 +27,9 @@ class HomeController extends AbstractController
     #[Route('/vehicules', name: 'vehicles')]
     public function listOfVehicles(VehicleRepository $vehicleRepository): Response
     {
-        // Récupérer tous les véhicules
+        // get all vehicles
         $vehicles = $vehicleRepository->findAll();
 
-        // Passer les données des véhicules au template approprié
         return $this->render('home/vehicles.html.twig', [
             'vehicles' => $vehicles,
         ]);
@@ -43,15 +38,14 @@ class HomeController extends AbstractController
     #[Route('/vehicules/{id}', name: 'details_vehicle')]
     public function details(VehicleRepository $vehicleRepository, $id): Response
     {
-        // Récupérer les informations du véhicule depuis le repository
+        // get vehicle by id
         $vehicle = $vehicleRepository->findOneById($id);
 
-        // Vérifier si le véhicule existe
+        // check if vehicle exists
         if (!$vehicle) {
             throw $this->createNotFoundException('Le véhicule demandé n\'existe pas.');
         }
 
-        // Rendre la vue en passant les informations du véhicule
         return $this->render('home/details.html.twig', [
                 'vehicle' => $vehicle,
             ]);
@@ -60,11 +54,10 @@ class HomeController extends AbstractController
     #[Route('/recherche/vehicules', name: 'search_vehicle')]
     public function search(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // get search query
         $query = $request->query->get('query');
 
-        // Utilisez $query pour effectuer la recherche de véhicules par marque ou modèle
-
-        // Par exemple, si vous utilisez Doctrine ORM
+        // get vehicles by search query
         $vehicles = $entityManager->getRepository(Vehicle::class)->findBySearchQuery($query);
 
         return $this->render('home/search.html.twig', [

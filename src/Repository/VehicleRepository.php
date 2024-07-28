@@ -34,10 +34,10 @@ class VehicleRepository extends ServiceEntityRepository
 
 
     /**
-     * Recherche des véhicules par marque ou modèle.
+     * search for vehicles by brand or model
      *
-     * @param string $query La requête de recherche (marque ou modèle).
-     * @return Vehicle[] Les véhicules correspondant à la requête de recherche.
+     * @param string $query request search
+     * @return Vehicle[] vehicles found
      */
     public function findBySearchQuery(string $query): array
     {
@@ -48,10 +48,10 @@ class VehicleRepository extends ServiceEntityRepository
             ->getResult();
     }
     
-    /**
-     * @return Vehicle[]
-     * @return array<Vehicle>
-     */
+   /**
+    * Find all available vehicles
+    * @return Vehicle[] vehicles found
+    */
     public function findAllAvailableVehicles(): array
     {
         return $this->createQueryBuilder('v')

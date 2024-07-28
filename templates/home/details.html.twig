@@ -7,11 +7,7 @@
         <h1 class="title">{{ vehicle.brand }} {{ vehicle.model }}</h1>
         <div class="row">
             <div class="col-md-6">
-                {% if vehicle.images.first %}
                     <img src="{{ asset(vehicle.images.first.url) }}" class="img-fluid" alt="{{ vehicle.brand ~ ' ' ~ vehicle.model }}">
-                {% else %}
-                    <img src="{{ asset('images/default_vehicle.jpg') }}" class="img-fluid" alt="{{ vehicle.brand ~ ' ' ~ vehicle.model }}">
-                {% endif %}
                 {% if vehicle.images|length > 1 %}
                     <div class="mt-3">
                         <h4>Autres images :</h4>
@@ -36,7 +32,7 @@
                         {% endfor %}
                     </ul>
                     {% if app.user is not null and app.user.isVerified %}
-                        <a href="{{ path('reservation', {'vehicleId': vehicle.id}) }}" class="btn btn-primary">Réserver</a>
+                        <a href="{{ path('reservation', {'vehicleId': vehicle.id}) }}" class="btn btn-warning">Réserver</a>
                     {% else %}
                         <a href="{{ path('details_vehicle', {'id': vehicle.id}) }}" class="btn btn-secondary mb-2 disabled">Réserver</a><p>Merci de vous connecter et de vérifier votre email</p>
                     {% endif %}

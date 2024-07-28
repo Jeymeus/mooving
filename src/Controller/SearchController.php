@@ -7,20 +7,25 @@ use App\Repository\AvailabilityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SearchController extends AbstractController
 {
-
+    #[Route('/search/availability', name: 'search_availability')]
     public function searchAvailability(Request $request, AvailabilityRepository $availabilityRepository): Response
     {
+        
         $availabilities = [];
         $searchAvailabilityForm = $this->createForm(SearchAvailabilityType::class);
 
         if ($searchAvailabilityForm->handleRequest($request)->isSubmitted() && $searchAvailabilityForm->isValid()) {
+            
             $duration = $searchAvailabilityForm->getData();
             $price_per_day = $this->calculatePricePerDay($duration);
             $availabilities = $availabilityRepository->findByAvailability($duration, $price_per_day);
+
         } elseif ($request->isMethod('POST') && $request->request->get('extend_search')) {
+
             $start_date = \DateTime::createFromFormat('Y-m-d', $request->request->get('start_date'));
             $end_date = \DateTime::createFromFormat('Y-m-d', $request->request->get('end_date'));
             $maxPrice = $request->request->get('maxPrice');
@@ -42,7 +47,11 @@ class SearchController extends AbstractController
         ]);
     }
 
-   
+   /**
+    * Calculate the price per day.
+    * @param array $duration The duration.
+    * @return float The price per day.
+    */
     public function calculatePricePerDay(array $duration): float
     {
         $start_date = $duration['start_date'];

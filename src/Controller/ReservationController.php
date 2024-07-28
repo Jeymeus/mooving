@@ -40,7 +40,6 @@ class ReservationController extends AbstractController
             try {
                 $entityManager->persist($reservation);
                 $entityManager->flush();
-                // dd($reservation);
 
                 $mail = (new TemplatedEmail())
                     ->to('reservation@mooving.fr')
@@ -51,7 +50,6 @@ class ReservationController extends AbstractController
                     // dd($mail);
                     
                     $mailer->send($mail);
-                    // dd('test');
 
                 $this->addFlash('success', 'Votre réservation a bien été envoyée');
                 return $this->redirectToRoute('home');
