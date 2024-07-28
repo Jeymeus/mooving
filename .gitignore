@@ -11,7 +11,7 @@
 /web/media/
 
 # VSCode directory
-.vscode\extensions.json
+.vscode
 
 # Uploads directory
 public/uploads/
